@@ -79,18 +79,18 @@ Your backend API should now be live. 🚀
 
 
 # Rough directory structure:
-
-ecommerce-platform/
-│
-├── gateway/                             <-- API Gateway
-│   └── spring-cloud-gateway/
-│
-├── microservices/
-│   ├── product-service/                 <-- Node.js
-│   ├── cart-service/                    <-- Spring Boot
-│   └── auth-service/                    <-- Spring Boot
-│
-└── microfrontends/
-    ├── homepage-mfe/                    <-- Node.js/React/Vue etc.
-    ├── cart-mfe/
-    └── auth-mfe/
+    
+    ecommerce-platform/
+    │
+    ├── gateway/                           # API Gateway (Port 8080)
+    │   └── spring-cloud-gateway/
+    │
+    ├── microservices/                     # Backend Services
+    │   ├── product-service/              # Node.js/Express (Port 3002)
+    │   ├── cart-service/                 # Spring Boot (Port 8082)
+    │   └── auth-service/                 # Spring Boot (Port 8081)
+    │
+    └── microfrontends/                    # Frontend Apps
+        ├── homepage-mfe/                 # React (Port 3001)
+        ├── cart-mfe/                     # React (Port 3003)
+        └── auth-mfe/                     # React (Port 3000)
