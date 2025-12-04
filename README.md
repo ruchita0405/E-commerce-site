@@ -333,11 +333,5 @@ npm start
 
 ---
 
-If you want, I can also:
-✅ Add **Order model + order history**
-✅ Add **payment gateway (Razorpay/Stripe demo)**
-✅ Add **admin panel**
-✅ Generate full documentation PDF
 
-Just tell me!
 
