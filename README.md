@@ -4,7 +4,7 @@
 
 ### *Sustainable Shopping Made Simple*
 
-![EcoMart Banner](./docs/images/banner.png)
+![EcoMart Banner](./docs/banner.png)
 
 [![Java](https://img.shields.io/badge/Java-17-orange.svg)](https://www.oracle.com/java/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.1.5-brightgreen.svg)](https://spring.io/projects/spring-boot)
@@ -1329,47 +1329,47 @@ db.orders.createIndex({ createdAt: -1 });
 ## 📸 Screenshots
 
 ### **Homepage**
-![Homepage](./docs/images/homepage.png)
+![Homepage](./docs/homepage.png)
 *Modern, animated homepage with hero banner and product carousels*
 
 ### **Product Catalog**
-![Products](./docs/images/products.png)
+![Products](./docs/products.png)
 *Product grid with category filters and search functionality*
 
 ### **Product Details**
-![Product Detail](./docs/images/product-detail.png)
+![Product Detail](./docs/product-detail.png)
 *Detailed product view with add-to-cart functionality*
 
 ### **Shopping Cart**
-![Cart](./docs/images/cart.png)
+![Cart](./docs/cart.png)
 *Beautifully designed cart page with real-time price calculations*
 
 ### **Checkout Flow**
-![Checkout](./docs/images/checkout.png)
+![Checkout](./docs/checkout.png)
 *Streamlined checkout with address collection and order summary*
 
 ### **Authentication Pages**
 
 <div align="center">
-  <img src="./docs/images/login.png" width="45%" alt="Login Page" />
-  <img src="./docs/images/register.png" width="45%" alt="Register Page" />
+  <img src="./docs/login.png" width="45%" alt="Login Page" />
+  <img src="./docs/register.png" width="45%" alt="Register Page" />
 </div>
 
 *Clean, modern authentication pages with form validation*
 
 ### **OTP Verification**
-![OTP Verification](./docs/images/otp-verify.png)
+![OTP Verification](./docs/otp-verify.png)
 *Email verification with 6-digit OTP code*
 
 ### **Admin Dashboard**
-![Admin](./docs/images/admin-dashboard.png)
+![Admin](./docs/admin-dashboard.png)
 *User management dashboard with role assignment*
 
 ### **Email Templates**
 
 <div align="center">
-  <img src="./docs/images/otp-email.png" width="45%" alt="OTP Email" />
-  <img src="./docs/images/order-email.png" width="45%" alt="Order Email" />
+  <img src="./docs/otp-email.png" width="45%" alt="OTP Email" />
+  <img src="./docs/order-email.png" width="45%" alt="Order Email" />
 </div>
 
 *Professional HTML email templates for OTP and order confirmations*
@@ -1377,9 +1377,9 @@ db.orders.createIndex({ createdAt: -1 });
 ### **Mobile Responsive Design**
 
 <div align="center">
-  <img src="./docs/images/mobile-home.png" width="30%" alt="Mobile Home" />
-  <img src="./docs/images/mobile-products.png" width="30%" alt="Mobile Products" />
-  <img src="./docs/images/mobile-cart.png" width="30%" alt="Mobile Cart" />
+  <img src="./docs/mobile-home.png" width="30%" alt="Mobile Home" />
+  <img src="./docs/mobile-products.png" width="30%" alt="Mobile Products" />
+  <img src="./docs/mobile-cart.png" width="30%" alt="Mobile Cart" />
 </div>
 
 *Fully responsive design optimized for mobile devices*
@@ -1528,25 +1528,25 @@ ecomart/
 │   ├── package.json
 │   └── README.md
 │
-├── docs/                              # Documentation
-│   ├── images/                        # Screenshots
-│   │   ├── banner.png
-│   │   ├── homepage.png
-│   │   ├── products.png
-│   │   ├── cart.png
-│   │   ├── checkout.png
-│   │   ├── login.png
-│   │   ├── register.png
-│   │   ├── otp-verify.png
-│   │   ├── admin-dashboard.png
-│   │   ├── otp-email.png
-│   │   ├── order-email.png
-│   │   ├── mobile-home.png
-│   │   ├── mobile-products.png
-│   │   └── mobile-cart.png
-│   ├── API_COLLECTION.json            # Postman collection
-│   ├── DATABASE_SCHEMA.md             # Database documentation
-│   └── DEPLOYMENT.md                  # Deployment guide
+├── docs/                              # Documentation & Screenshots
+│   ├── banner.png
+│   ├── homepage.png
+│   ├── products.png
+│   ├── product-detail.png
+│   ├── cart.png
+│   ├── checkout.png
+│   ├── login.png
+│   ├── register.png
+│   ├── otp-verify.png
+│   ├── admin-dashboard.png
+│   ├── otp-email.png
+│   ├── order-email.png
+│   ├── mobile-home.png
+│   ├── mobile-products.png
+│   ├── mobile-cart.png
+│   ├── API_COLLECTION.json
+│   ├── DATABASE_SCHEMA.md
+│   └── DEPLOYMENT.md
 │
 ├── .gitignore
 ├── README.md
@@ -2012,8 +2012,35 @@ Planned features for future releases:
 
 ### ⭐ If you found this project helpful, please give it a star!
 
-**Built with ❤️ by Varad Jumbad, Ruchita Kamble , Kartar Singh Gothwal**
+**Built with ❤️ by Varad Jumbad, Ruchita Kamble, Kartar Singh Gothwal**
 
 [⬆ Back to Top](#-ecomart---e-commerce-platform)
 
 </div>
+```
+
+---
+
+## ✅ FOLDER STRUCTURE
+
+Your `docs/` folder should look like this:
+```
+docs/
+├── banner.png
+├── homepage.png
+├── products.png
+├── product-detail.png
+├── cart.png
+├── checkout.png
+├── login.png
+├── register.png
+├── otp-verify.png
+├── admin-dashboard.png
+├── otp-email.png
+├── order-email.png
+├── mobile-home.png
+├── mobile-products.png
+├── mobile-cart.png
+├── API_COLLECTION.json
+├── DATABASE_SCHEMA.md
+└── DEPLOYMENT.md
