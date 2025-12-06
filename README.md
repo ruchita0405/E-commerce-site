@@ -1,140 +1,185 @@
-# 🛒 E-Commerce Platform
+<div align="center">
 
-Full-stack microservices-based e-commerce platform built with modern technologies. This monorepo contains all microservices for the complete e-commerce solution.
+# 🌿 EcoMart - E-Commerce Platform
 
----
+### *Sustainable Shopping Made Simple*
 
-## 📋 Table of Contents
+![EcoMart Banner](./docs/images/banner.png)
 
-- [Overview](#overview)
-- [System Architecture](#system-architecture)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
-- [Services](#services)
-- [Team Workflow](#team-workflow)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [Team Members](#team-members)
-- [License](#license)
+[![Java](https://img.shields.io/badge/Java-17-orange.svg)](https://www.oracle.com/java/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.1.5-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![React](https://img.shields.io/badge/React-18.2.0-blue.svg)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-18.x-green.svg)](https://nodejs.org/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-blue.svg)](https://www.mysql.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green.svg)](https://www.mongodb.com/cloud/atlas)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
----
+[Features](#-features) • [Architecture](#-architecture) • [Installation](#-installation) • [Usage](#-usage) • [API Documentation](#-api-documentation) • [Screenshots](#-screenshots)
 
-## 🎯 Overview
-
-A comprehensive e-commerce platform featuring:
-
-- ✅ **User Authentication & Authorization** - JWT-based secure authentication
-- ✅ **Email Verification** - 6-digit OTP verification system
-- ✅ **Role-Based Access Control** - User and Admin roles
-- ✅ **Admin Dashboard** - Complete admin panel for management
-- 🚧 **Product Catalog** - Coming soon
-- 🚧 **Shopping Cart** - Coming soon
-- 🚧 **Order Management** - Coming soon
-- 🚧 **Payment Integration** - Coming soon
+</div>
 
 ---
 
-## 🏗️ System Architecture
+## 📖 Table of Contents
 
+- [About](#-about)
+- [Features](#-features)
+- [Architecture](#-architecture)
+- [Tech Stack](#-tech-stack)
+- [Prerequisites](#-prerequisites)
+- [Installation](#-installation)
+- [Configuration](#-configuration)
+- [Running the Application](#-running-the-application)
+- [API Documentation](#-api-documentation)
+- [Database Schema](#-database-schema)
+- [Screenshots](#-screenshots)
+- [Project Structure](#-project-structure)
+- [Testing](#-testing)
+- [Deployment](#-deployment)
+- [Contributing](#-contributing)
+- [License](#-license)
+- [Contact](#-contact)
+
+---
+
+## 🌟 About
+
+**EcoMart** is a full-stack e-commerce platform built with a **microservices architecture** that specializes in eco-friendly and sustainable products. The project demonstrates modern web development practices including JWT authentication, email verification, real-time cart management, and responsive UI design.
+
+### 🎯 Project Goals
+
+- Demonstrate microservices architecture
+- Implement secure authentication with JWT
+- Build responsive, animated user interfaces
+- Showcase integration of multiple technologies
+- Create production-ready, scalable code
+
+---
+
+## ✨ Features
+
+### 🔐 Authentication & Security
+- ✅ User registration with email validation
+- ✅ OTP-based email verification
+- ✅ JWT token authentication
+- ✅ Password hashing with BCrypt
+- ✅ Role-based access control (Customer/Admin)
+- ✅ Secure session management
+
+### 🛒 E-Commerce Functionality
+- ✅ Product catalog with categories
+- ✅ Advanced search and filtering
+- ✅ Shopping cart with real-time updates
+- ✅ Stock management
+- ✅ Order placement and tracking
+- ✅ Email order confirmations
+
+### 👨‍💼 Admin Features
+- ✅ User management dashboard
+- ✅ Product CRUD operations
+- ✅ Stock updates
+- ✅ Order management
+- ✅ User role assignment
+
+### 🎨 User Experience
+- ✅ Responsive design (mobile, tablet, desktop)
+- ✅ Smooth animations and transitions
+- ✅ Dark mode support
+- ✅ Loading states and error handling
+- ✅ Toast notifications
+- ✅ Form validation
+
+---
+
+## 🏗️ Architecture
+
+### Microservices Architecture Diagram
 ```
-┌─────────────────────────────────────────────────────┐
-│                   Frontend (React)                   │
-│            Port 3000 - User Interface                │
-└───────────────────┬─────────────────────────────────┘
-                    │
-                    │ HTTP/REST API
-                    ↓
-┌─────────────────────────────────────────────────────┐
-│              API Gateway (Future)                    │
-└───────────────────┬─────────────────────────────────┘
-                    │
-        ┌───────────┼───────────┐
-        ↓           ↓           ↓
-┌───────────┐ ┌──────────┐ ┌──────────┐
-│   Auth    │ │ Product  │ │  Order   │
-│  Service  │ │ Service  │ │ Service  │
-│ Port 8080 │ │Port 8081 │ │Port 8082 │
-└─────┬─────┘ └────┬─────┘ └────┬─────┘
-      │            │            │
-      └────────────┼────────────┘
-                   ↓
-        ┌──────────────────┐
-        │  MySQL Database  │
-        │    Port 3306     │
-        └──────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│                     CLIENT LAYER                            │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ┌──────────────────┐         ┌──────────────────┐        │
+│  │  Auth Frontend   │         │  Main Frontend   │        │
+│  │  (React - 3000)  │         │ (React - 5173)   │        │
+│  └────────┬─────────┘         └────────┬─────────┘        │
+│           │                             │                   │
+└───────────┼─────────────────────────────┼───────────────────┘
+            │                             │
+            │         API CALLS           │
+            │                             │
+┌───────────┼─────────────────────────────┼───────────────────┐
+│           │     BACKEND SERVICES        │                   │
+├───────────┼─────────────────────────────┼───────────────────┤
+│           │                             │                   │
+│  ┌────────▼─────────┐    ┌──────────────▼────────┐        │
+│  │  Auth Service    │    │  Checkout Service     │        │
+│  │  Spring Boot     │    │  Spring Boot          │        │
+│  │  Port: 8080      │    │  Port: 8082           │        │
+│  │  + JWT           │    │  + Email Service      │        │
+│  │  + OTP           │    │  + Stock Management   │        │
+│  └────────┬─────────┘    └──────────┬────────────┘        │
+│           │                          │                      │
+│           │              ┌───────────▼────────┐            │
+│           │              │  Homepage Service  │            │
+│           │              │  Node.js/Express   │            │
+│           │              │  Port: 3001        │            │
+│           │              │  + Cart API        │            │
+│           │              │  + Products API    │            │
+│           │              └───────────┬────────┘            │
+│           │                          │                      │
+└───────────┼──────────────────────────┼──────────────────────┘
+            │                          │
+            │     DATABASE LAYER       │
+            │                          │
+┌───────────┼──────────────────────────┼──────────────────────┐
+│           │                          │                       │
+│  ┌────────▼─────────┐    ┌──────────▼────────────┐        │
+│  │  MySQL Database  │    │  MongoDB Atlas        │        │
+│  │  (User Auth)     │    │  (Products, Cart,     │        │
+│  │  Port: 3306      │    │   Orders)             │        │
+│  └──────────────────┘    └───────────────────────┘        │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
 ```
+
+### Service Communication Flow
+
+![Architecture Flow](./docs/images/architecture-flow.png)
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### **Backend**
-- **Java 17** - Programming language
-- **Spring Boot 3.1.5** - Backend framework
-- **Spring Security 6.1.5** - Authentication & authorization
-- **MySQL 8.0** - Relational database
-- **Hibernate/JPA** - ORM framework
-- **JWT (io.jsonwebtoken 0.12.3)** - Token-based authentication
-- **JavaMail** - Email service
-- **Maven** - Build tool
+
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| ![Java](https://img.shields.io/badge/Java-17-orange?logo=java) | 17 | Programming Language |
+| ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.1.5-brightgreen?logo=springboot) | 3.1.5 | Backend Framework |
+| ![Node.js](https://img.shields.io/badge/Node.js-18.x-green?logo=node.js) | 18.x | JavaScript Runtime |
+| ![Express](https://img.shields.io/badge/Express-4.x-lightgrey?logo=express) | 4.x | Web Framework |
+| ![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?logo=mysql) | 8.0 | Relational Database |
+| ![MongoDB](https://img.shields.io/badge/MongoDB-6.x-green?logo=mongodb) | 6.x | NoSQL Database |
+| ![JWT](https://img.shields.io/badge/JWT-Auth-black?logo=jsonwebtokens) | - | Authentication |
 
 ### **Frontend**
-- **React 18.2.0** - UI library
-- **React Router 6.20.1** - Client-side routing
-- **Axios 1.6.2** - HTTP client
-- **CSS3** - Styling with glassmorphism effects
 
-### **DevOps & Tools**
-- **Git & GitHub** - Version control
-- **MySQL Workbench** - Database management
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| ![React](https://img.shields.io/badge/React-18.2-blue?logo=react) | 18.2 | UI Library |
+| ![Vite](https://img.shields.io/badge/Vite-4.x-purple?logo=vite) | 4.x | Build Tool |
+| ![TailwindCSS](https://img.shields.io/badge/Tailwind-3.x-cyan?logo=tailwindcss) | 3.x | CSS Framework |
+| ![DaisyUI](https://img.shields.io/badge/DaisyUI-3.x-5A0EF8?logo=daisyui) | 3.x | Component Library |
+| ![Axios](https://img.shields.io/badge/Axios-1.x-purple?logo=axios) | 1.x | HTTP Client |
+
+### **Additional Tools**
+
+- **Maven** - Build automation for Java
+- **npm** - Package manager for JavaScript
 - **Postman** - API testing
-- **VS Code / IntelliJ IDEA** - IDEs
-
----
-
-## 📁 Project Structure
-
-```
-E-commerce-site/
-├── .gitignore                      # Root gitignore
-├── README.md                       # This file
-└── services/
-    ├── auth-service/               # Authentication microservice
-    │   ├── .gitignore
-    │   ├── README.md
-    │   ├── database/
-    │   │   └── schema.sql          # Database schema
-    │   ├── backend-app/
-    │   │   ├── pom.xml
-    │   │   └── src/
-    │   │       ├── main/
-    │   │       │   ├── java/
-    │   │       │   │   └── com/ninehub/authentication/
-    │   │       │   │       ├── controller/    # REST endpoints
-    │   │       │   │       ├── service/       # Business logic
-    │   │       │   │       ├── entity/        # Database models
-    │   │       │   │       ├── repository/    # Data access
-    │   │       │   │       ├── security/      # Security config
-    │   │       │   │       └── dto/           # Data transfer objects
-    │   │       │   └── resources/
-    │   │       │       ├── application.properties.template
-    │   │       │       └── templates/         # Email templates
-    │   │       └── test/
-    │   └── frontend-react/
-    │       ├── package.json
-    │       ├── public/
-    │       └── src/
-    │           ├── components/      # Reusable components
-    │           ├── pages/           # Page components
-    │           ├── services/        # API calls
-    │           └── App.js           # Main application
-    │
-    ├── product-service/            # Coming soon
-    ├── order-service/              # Coming soon
-    └── payment-service/            # Coming soon
-```
+- **Git** - Version control
+- **Gmail SMTP** - Email service
 
 ---
 
@@ -142,1013 +187,730 @@ E-commerce-site/
 
 Before you begin, ensure you have the following installed:
 
-### **Required Software**
-
-| Software | Version | Download Link | Purpose |
-|----------|---------|---------------|---------|
-| **Java JDK** | 17+ | [Oracle JDK](https://www.oracle.com/java/technologies/downloads/) | Backend runtime |
-| **Maven** | 3.6+ | [Apache Maven](https://maven.apache.org/download.cgi) | Build tool |
-| **Node.js** | 16+ | [Node.js](https://nodejs.org/) | Frontend runtime |
-| **MySQL** | 8.0+ | [MySQL](https://dev.mysql.com/downloads/mysql/) | Database |
-| **Git** | Latest | [Git](https://git-scm.com/downloads) | Version control |
-
-### **Recommended Software**
-
-- **MySQL Workbench** - Database GUI
-- **Postman** - API testing
-- **VS Code** or **IntelliJ IDEA** - Code editor
-- **GitHub Desktop** (optional) - Git GUI
-
-### **Verify Installation**
-
+- **Java Development Kit (JDK)** 17 or higher
 ```bash
-# Check Java version
-java -version
-# Should show: java version "17.x.x"
-
-# Check Maven version
-mvn -version
-# Should show: Apache Maven 3.x.x
-
-# Check Node.js version
-node -v
-# Should show: v16.x.x or higher
-
-# Check npm version
-npm -v
-# Should show: 8.x.x or higher
-
-# Check MySQL
-mysql --version
-# Should show: mysql Ver 8.0.x
-
-# Check Git
-git --version
-# Should show: git version 2.x.x
+  java -version
 ```
+
+- **Node.js** 18.x or higher & npm
+```bash
+  node --version
+  npm --version
+```
+
+- **MySQL** 8.0 or higher
+```bash
+  mysql --version
+```
+
+- **Maven** 3.8 or higher
+```bash
+  mvn --version
+```
+
+- **Git**
+```bash
+  git --version
+```
+
+- **MongoDB Atlas Account** (Free tier)
+  - Sign up at [https://www.mongodb.com/cloud/atlas](https://www.mongodb.com/cloud/atlas)
+
+- **Gmail Account** with App Password enabled
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Installation
 
-### **1. Clone the Repository**
-
+### 1. Clone the Repository
 ```bash
-# Clone the repository
-git clone https://github.com/ruchita0405/E-commerce-site.git
-
-# Navigate to project directory
-cd E-commerce-site
-
-# Switch to development branch
-git checkout dev
-
-# Verify you're on the correct branch
-git branch
-# Should show: * dev
+git clone https://github.com/yourusername/ecomart.git
+cd ecomart
 ```
 
----
-
-### **2. Database Setup**
-
-#### **Step 1: Start MySQL Server**
-
-**Windows:**
-- Open **Services** (Win + R → type `services.msc`)
-- Find **MySQL80** service
-- Right-click → **Start**
-
-**Mac:**
-```bash
-mysql.server start
-```
-
-**Linux:**
-```bash
-sudo systemctl start mysql
-```
-
-#### **Step 2: Create Database**
-
-```bash
-# Login to MySQL
-mysql -u root -p
-# Enter your MySQL root password
-```
-
+### 2. Setup MySQL Database
 ```sql
+-- Login to MySQL
+mysql -u root -p
+
 -- Create database
 CREATE DATABASE ecommerce_auth;
 
--- Verify database was created
-SHOW DATABASES;
+-- Create user (optional)
+CREATE USER 'ecomart'@'localhost' IDENTIFIED BY 'your_password';
+GRANT ALL PRIVILEGES ON ecommerce_auth.* TO 'ecomart'@'localhost';
+FLUSH PRIVILEGES;
 
 -- Exit MySQL
 EXIT;
 ```
 
-#### **Step 3: Import Database Schema**
+### 3. Setup MongoDB Atlas
 
-```bash
-# Import schema
-mysql -u root -p ecommerce_auth < services/auth-service/database/schema.sql
+1. Create a free cluster at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+2. Create a database user
+3. Whitelist your IP address (or use `0.0.0.0/0` for development)
+4. Get your connection string (looks like: `mongodb+srv://user:password@cluster.mongodb.net/`)
 
-# Verify tables were created
-mysql -u root -p ecommerce_auth -e "SHOW TABLES;"
-```
+### 4. Setup Gmail App Password
 
-**Expected output:**
-```
-+---------------------------+
-| Tables_in_ecommerce_auth  |
-+---------------------------+
-| jwt                       |
-| refresh-token             |
-| role                      |
-| users                     |
-| validation                |
-+---------------------------+
-```
+1. Go to [Google Account Security](https://myaccount.google.com/security)
+2. Enable **2-Step Verification**
+3. Go to **App Passwords**
+4. Generate a password for "Mail"
+5. Save the 16-character password
 
 ---
 
-### **3. Backend Configuration**
+## ⚙️ Configuration
 
-#### **Step 1: Navigate to Backend**
+### **1. Auth Service Configuration**
 
-```bash
-cd services/auth-service/backend-app/src/main/resources
-```
-
-#### **Step 2: Create Configuration File**
-
-```bash
-# Windows
-copy application.properties.template application.properties
-
-# Mac/Linux
-cp application.properties.template application.properties
-```
-
-#### **Step 3: Configure Database Credentials**
-
-Open `application.properties` in your text editor and update:
-
+**File:** `ecommerce-backend/src/main/resources/application.properties`
 ```properties
-# Database Configuration
+# Server
+server.port=8080
+
+# MySQL Database
 spring.datasource.url=jdbc:mysql://localhost:3306/ecommerce_auth
 spring.datasource.username=root
-spring.datasource.password=YOUR_MYSQL_PASSWORD_HERE
+spring.datasource.password=your_mysql_password
+
+# JPA/Hibernate
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+# JWT Configuration
+jwt.secret=your_super_secret_key_min_256_bits_change_in_production
+jwt.expiration=86400000
+
+# Email Configuration
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=your_email@gmail.com
+spring.mail.password=your_16_digit_app_password
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+
+# CORS
+cors.allowed.origins=http://localhost:3000,http://localhost:5173
 ```
 
-#### **Step 4: Generate JWT Secret**
+### **2. Checkout Service Configuration**
 
-**Option 1 - Online Tool:**
-- Visit: https://generate-secret.vercel.app/64
-- Copy the generated secret
-
-**Option 2 - PowerShell (Windows):**
-```powershell
-[Convert]::ToBase64String([System.Security.Cryptography.RandomNumberGenerator]::GetBytes(64))
-```
-
-**Option 3 - Terminal (Mac/Linux):**
-```bash
-openssl rand -base64 64
-```
-
-**Update in `application.properties`:**
+**File:** `ecommerce-backendcheckout/src/main/resources/application.properties`
 ```properties
-jwt.secret=PASTE_YOUR_GENERATED_SECRET_HERE
+# Server
+server.port=8082
+
+# MongoDB Atlas
+spring.data.mongodb.uri=mongodb+srv://username:password@cluster.mongodb.net/test?retryWrites=true&w=majority
+
+# Email Configuration (same as Auth Service)
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=your_email@gmail.com
+spring.mail.password=your_16_digit_app_password
 ```
 
-#### **Step 5: Configure Email Service**
+### **3. Homepage Service Configuration**
 
-**Gmail Setup:**
-
-1. **Enable 2-Factor Authentication:**
-   - Go to https://myaccount.google.com/security
-   - Click "2-Step Verification"
-   - Follow the setup process
-
-2. **Generate App Password:**
-   - Go to https://myaccount.google.com/apppasswords
-   - Select "Mail" and your device
-   - Click "Generate"
-   - Copy the 16-character password (e.g., `abcd efgh ijkl mnop`)
-
-3. **Update Configuration:**
-```properties
-spring.mail.username=your.email@gmail.com
-spring.mail.password=abcdefghijklmnop
-# Note: Remove spaces from the 16-character password
+**File:** `homepage-service/.env`
+```env
+PORT=3001
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/test?retryWrites=true&w=majority
+JWT_SECRET=your_super_secret_key_min_256_bits_change_in_production
 ```
 
-**⚠️ CRITICAL: Use App Password, NOT your regular Gmail password!**
+### **4. Frontend Configuration**
+
+**Auth Frontend - File:** `ecommerce-frontend/src/config.js`
+```javascript
+export const API_BASE_URL = 'http://localhost:8080/api';
+```
+
+**Main Frontend - File:** `homepage-service/frontend/src/config.js`
+```javascript
+export const API_BASE_URL = 'http://localhost:3001/api';
+export const AUTH_API_URL = 'http://localhost:8080/api';
+export const CHECKOUT_API_URL = 'http://localhost:8082/api';
+```
 
 ---
 
-### **4. Start Backend Server**
+## 🎮 Running the Application
 
+### **Start All Services**
+
+#### **Terminal 1: Auth Service (Port 8080)**
 ```bash
-# Navigate to backend directory
-cd services/auth-service/backend-app
-
-# Clean and install dependencies
+cd ecommerce-backend
 mvn clean install
-
-# Start the server
 mvn spring-boot:run
 ```
 
-**Expected output:**
+**Expected Output:**
 ```
-  .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::                (v3.1.5)
-
-...
-Started AuthenticationApplication in 4.5 seconds
+✅ Started EcommerceBackendApplication in 3.5 seconds
+🚀 Auth Service running on http://localhost:8080
 ```
 
-**Backend is now running on:** http://localhost:8080
-
----
-
-### **5. Frontend Setup**
-
-**Open a NEW terminal window** (keep backend running)
-
+#### **Terminal 2: Checkout Service (Port 8082)**
 ```bash
-# Navigate to frontend directory
-cd services/auth-service/frontend-react
+cd ecommerce-backendcheckout
+mvn clean install
+mvn spring-boot:run
+```
 
-# Install dependencies
+**Expected Output:**
+```
+✅ Started EcommerceBackendcheckoutApplication in 2.1 seconds
+🚀 Checkout Service running on http://localhost:8082
+```
+
+#### **Terminal 3: Homepage Service (Port 3001)**
+```bash
+cd homepage-service
 npm install
-
-# Start development server
 npm start
 ```
 
-**Expected output:**
+**Expected Output:**
 ```
-Compiled successfully!
-
-You can now view frontend-react in the browser.
-
-  Local:            http://localhost:3000
-  On Your Network:  http://192.168.x.x:3000
+✅ Server is running on port 3001
+✅ MongoDB connected successfully
 ```
 
-**Frontend will automatically open in your browser at:** http://localhost:3000
+#### **Terminal 4: Auth Frontend (Port 3000)**
+```bash
+cd ecommerce-frontend
+npm install
+npm start
+```
+
+**Expected Output:**
+```
+✅ Compiled successfully!
+🌐 Local: http://localhost:3000
+```
+
+#### **Terminal 5: Main Frontend (Port 5173)**
+```bash
+cd homepage-service/frontend
+npm install
+npm run dev
+```
+
+**Expected Output:**
+```
+✅ VITE v4.5.0 ready in 450 ms
+🌐 Local: http://localhost:5173
+```
+
+### **Verify All Services**
+
+Open your browser and check:
+
+- ✅ Auth Service: http://localhost:8080/api/auth/health
+- ✅ Checkout Service: http://localhost:8082/api/products
+- ✅ Homepage Service: http://localhost:3001/api/products
+- ✅ Auth Frontend: http://localhost:3000
+- ✅ Main Frontend: http://localhost:5173
 
 ---
 
-### **6. Verify Installation**
+## 📚 API Documentation
 
-#### **Test Backend API:**
+### **Authentication Endpoints**
 
-Open your browser and visit:
-- **Swagger UI:** http://localhost:8080/swagger-ui.html
-- **Health Check:** http://localhost:8080/actuator/health (if enabled)
+#### **Register User**
+```http
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
 
-#### **Test Frontend:**
-
-1. Open http://localhost:3000
-2. Click "Register" in navigation
-3. Fill in registration form
-4. Check your email for activation code
-5. Enter activation code
-6. Login with credentials
-7. Access dashboard
-
-#### **Test Complete Flow:**
-
-```bash
-# Test registration endpoint
-curl -X POST http://localhost:8080/register \
-  -H "Content-Type: application/json" \
-  -d '{
-    "firstName": "Test",
-    "email": "test@example.com",
-    "password": "test123"
-  }'
-```
-
-**Expected response:**
-```json
 {
-  "message": "Registration successful! Please check your email for the activation code.",
-  "email": "test@example.com"
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123"
 }
 ```
 
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Registration successful. Check email for OTP."
+}
+```
+
+#### **Verify OTP**
+```http
+POST http://localhost:8080/api/auth/verify-otp
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "otp": "123456"
+}
+```
+
+#### **Login**
+```http
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "password123"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Login successful",
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "email": "john@example.com",
+    "name": "John Doe",
+    "role": "CUSTOMER",
+    "userId": 1
+  }
+}
+```
+
+### **Product Endpoints**
+
+#### **Get All Products**
+```http
+GET http://localhost:3001/api/products
+```
+
+#### **Get Product by ID**
+```http
+GET http://localhost:3001/api/products/{id}
+```
+
+#### **Create Product (Admin)**
+```http
+POST http://localhost:8082/api/products
+Authorization: Bearer {jwt_token}
+Content-Type: application/json
+
+{
+  "name": "Bamboo Toothbrush",
+  "description": "Eco-friendly bamboo toothbrush",
+  "price": 199,
+  "stockQuantity": 100,
+  "categoryId": "123",
+  "image": "https://example.com/image.jpg"
+}
+```
+
+### **Cart Endpoints**
+
+#### **Get User Cart**
+```http
+GET http://localhost:3001/api/cart/{userId}
+Authorization: Bearer {jwt_token}
+```
+
+#### **Add to Cart**
+```http
+POST http://localhost:3001/api/cart/{userId}/items
+Authorization: Bearer {jwt_token}
+Content-Type: application/json
+
+{
+  "productId": "123",
+  "quantity": 2
+}
+```
+
+### **Order Endpoints**
+
+#### **Create Order**
+```http
+POST http://localhost:3001/api/orders
+Authorization: Bearer {jwt_token}
+Content-Type: application/json
+
+{
+  "userId": "1",
+  "items": [...],
+  "totalAmount": 999,
+  "address": {...}
+}
+```
+
+#### **Send Order Email**
+```http
+POST http://localhost:8082/api/email/send-order-email
+Content-Type: application/json
+
+{
+  "to": "customer@example.com",
+  "customerName": "John Doe",
+  "orderId": 123456,
+  "totalAmount": 999,
+  "items": [...]
+}
+```
+
+**Full API Documentation:** [View Postman Collection](./docs/API_COLLECTION.json)
+
 ---
 
-## 🔐 Default Credentials
+## 🗄️ Database Schema
 
-### **Admin Account**
-
-After database setup, you can login with:
-
-- **Email:** `admin@techstore.com`
-- **Password:** `admin123`
-- **Role:** ADMIN
-
-**⚠️ IMPORTANT: Change this password immediately in production!**
-
-**To change admin password:**
-
+### **MySQL - Users Table**
 ```sql
--- Connect to MySQL
-mysql -u root -p ecommerce_auth
-
--- Generate new BCrypt hash (use online tool: https://bcrypt-generator.com/)
--- Then update:
-UPDATE users 
-SET password = 'NEW_BCRYPT_HASH_HERE' 
-WHERE email = 'admin@techstore.com';
+CREATE TABLE users (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(50) DEFAULT 'CUSTOMER',
+    is_active BOOLEAN DEFAULT FALSE,
+    otp VARCHAR(6),
+    otp_expiry DATETIME,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    
+    INDEX idx_email (email),
+    INDEX idx_role (role)
+);
 ```
 
----
-
-## 🎯 Services
-
-### **1. Authentication Service** ✅ (Active)
-
-**Purpose:** User authentication, authorization, and account management
-
-**Features:**
-- User registration with email verification
-- JWT-based authentication
-- Refresh token mechanism
-- Password encryption with BCrypt
-- Role-based access control (USER, ADMIN)
-- Email activation with 6-digit OTP
-- Admin dashboard
-- Password reset functionality
-
-**Endpoints:**
-
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| POST | `/register` | ❌ No | Register new user |
-| POST | `/activate` | ❌ No | Activate account with OTP |
-| POST | `/login` | ❌ No | Login and get JWT tokens |
-| POST | `/refresh/token` | ✅ Yes | Refresh access token |
-| POST | `/signout` | ✅ Yes | Logout user |
-| POST | `/password/update` | ✅ Yes | Change password |
-| POST | `/password/new` | ✅ Yes | Reset password |
-| GET | `/admin/*` | ✅ Admin | Admin-only endpoints |
-
-**Ports:**
-- Backend: 8080
-- Frontend: 3000
-
-**Database:**
-- Name: `ecommerce_auth`
-- Tables: `users`, `role`, `jwt`, `refresh-token`, `validation`
-
-**Documentation:**
-- Detailed README: `services/auth-service/README.md`
-- Swagger UI: http://localhost:8080/swagger-ui.html
-
----
-
-### **2. Product Service** 🚧 (Coming Soon)
-
-**Purpose:** Product catalog management
-
-**Planned Features:**
-- Product CRUD operations
-- Category management
-- Product search and filtering
-- Image upload
-- Inventory management
-- Product reviews and ratings
-
-**Port:** 8081
-
----
-
-### **3. Order Service** 🚧 (Coming Soon)
-
-**Purpose:** Order processing and management
-
-**Planned Features:**
-- Shopping cart
-- Order creation and tracking
-- Order history
-- Order status management
-- Invoice generation
-
-**Port:** 8082
-
----
-
-### **4. Payment Service** 🚧 (Coming Soon)
-
-**Purpose:** Payment processing
-
-**Planned Features:**
-- Multiple payment gateways
-- Payment verification
-- Refund processing
-- Transaction history
-
-**Port:** 8083
-
----
-
-## 👥 Team Workflow
-
-### **Branch Strategy**
-
-```
-main (production)
-  ↑
-  └── dev (active development) ← DEFAULT BRANCH
-       ↑
-       ├── feature/user-profile
-       ├── feature/product-catalog
-       ├── feature/shopping-cart
-       └── bugfix/login-issue
-```
-
-### **Daily Workflow**
-
-#### **1. Start of Day**
-
-```bash
-# Make sure you're on dev branch
-git checkout dev
-
-# Get latest changes
-git pull origin dev
-
-# Verify you have latest code
-git log --oneline -5
-```
-
-#### **2. Working on a New Feature**
-
-```bash
-# Create feature branch from dev
-git checkout dev
-git checkout -b feature/add-user-profile
-
-# Make your changes
-# ... edit files ...
-
-# Check what changed
-git status
-git diff
-
-# Stage changes
-git add .
-
-# Commit with descriptive message
-git commit -m "Add user profile page with edit functionality"
-
-# Push feature branch to GitHub
-git push origin feature/add-user-profile
-```
-
-#### **3. Create Pull Request**
-
-1. Go to GitHub repository
-2. Click "Pull requests" → "New pull request"
-3. Set base: `dev` ← compare: `feature/add-user-profile`
-4. Add title and description
-5. Request review from team member
-6. Click "Create pull request"
-
-#### **4. After PR is Approved and Merged**
-
-```bash
-# Switch back to dev
-git checkout dev
-
-# Get latest (includes your merged feature)
-git pull origin dev
-
-# Delete local feature branch
-git branch -d feature/add-user-profile
-
-# Delete remote feature branch
-git push origin --delete feature/add-user-profile
-```
-
-### **Commit Message Guidelines**
-
-**Format:**
-```
-<type>: <subject>
-
-<body> (optional)
-```
-
-**Types:**
-- `feat:` - New feature
-- `fix:` - Bug fix
-- `docs:` - Documentation changes
-- `style:` - Code style changes (formatting)
-- `refactor:` - Code refactoring
-- `test:` - Adding tests
-- `chore:` - Build process or auxiliary tool changes
-
-**Examples:**
-```bash
-git commit -m "feat: add user profile page"
-git commit -m "fix: resolve login redirect issue"
-git commit -m "docs: update API documentation"
-git commit -m "refactor: simplify authentication logic"
-```
-
----
-
-## 🐛 Troubleshooting
-
-### **Backend Won't Start**
-
-#### **Issue: Port 8080 already in use**
-
-**Error:**
-```
-Web server failed to start. Port 8080 was already in use.
-```
-
-**Solution:**
-```bash
-# Windows - Find and kill process using port 8080
-netstat -ano | findstr :8080
-taskkill /PID <PID_NUMBER> /F
-
-# Mac/Linux
-lsof -ti:8080 | xargs kill -9
-
-# OR change port in application.properties
-server.port=8081
-```
-
----
-
-#### **Issue: Cannot connect to database**
-
-**Error:**
-```
-Communications link failure
-```
-
-**Solutions:**
-
-1. **Check MySQL is running:**
-```bash
-# Windows
-services.msc → MySQL80 → Start
-
-# Mac/Linux
-sudo systemctl status mysql
-```
-
-2. **Verify database exists:**
-```sql
-mysql -u root -p
-SHOW DATABASES;
-```
-
-3. **Check credentials in `application.properties`:**
-```properties
-spring.datasource.username=root
-spring.datasource.password=YOUR_CORRECT_PASSWORD
-```
-
----
-
-#### **Issue: Email not sending**
-
-**Error:**
-```
-AuthenticationFailedException: 535-5.7.8 Username and Password not accepted
-```
-
-**Solutions:**
-
-1. **Use Gmail App Password (NOT regular password):**
-   - Go to https://myaccount.google.com/apppasswords
-   - Generate new 16-character password
-   - Use this in `application.properties`
-
-2. **Enable 2-Factor Authentication:**
-   - Required for App Passwords
-   - https://myaccount.google.com/security
-
-3. **Allow less secure apps (not recommended):**
-   - Only if App Password doesn't work
-   - https://myaccount.google.com/lesssecureapps
-
----
-
-### **Frontend Issues**
-
-#### **Issue: npm install fails**
-
-**Error:**
-```
-npm ERR! code ENOENT
-```
-
-**Solution:**
-```bash
-# Clear npm cache
-npm cache clean --force
-
-# Delete node_modules and package-lock.json
-rm -rf node_modules package-lock.json
-
-# Reinstall
-npm install
-```
-
----
-
-#### **Issue: Blank page after npm start**
-
-**Solutions:**
-
-1. **Check browser console (F12):**
-   - Look for errors
-   - Common: CORS issues or API connection problems
-
-2. **Verify backend is running:**
-   - Check http://localhost:8080/swagger-ui.html
-
-3. **Clear browser cache:**
-   - Hard refresh: Ctrl + Shift + R (Windows) or Cmd + Shift + R (Mac)
-
----
-
-### **Authentication Issues**
-
-#### **Issue: Login says "Invalid credentials" with correct password**
-
-**Solutions:**
-
-1. **Check user is activated:**
-```sql
-mysql -u root -p ecommerce_auth
-SELECT email, is_actif, role_id FROM users WHERE email = 'your@email.com';
--- is_actif should be 1 (TRUE)
-```
-
-2. **Reset password:**
-```sql
--- Generate new hash at: https://bcrypt-generator.com/
-UPDATE users 
-SET password = 'NEW_BCRYPT_HASH' 
-WHERE email = 'your@email.com';
-```
-
-3. **Check role assignment:**
-```sql
--- For admin access, role_id should be 2
-UPDATE users 
-SET role_id = 2 
-WHERE email = 'your@email.com';
-```
-
----
-
-#### **Issue: Can't access admin page**
-
-**Solutions:**
-
-1. **Check localStorage:**
-   - Open browser console (F12)
-   - Type: `localStorage.getItem('role')`
-   - Should show: `"ADMIN"` or `"ROLE_ADMIN"`
-
-2. **Clear localStorage and login again:**
+### **MongoDB - Products Collection**
 ```javascript
-localStorage.clear();
-location.reload();
+{
+  _id: ObjectId,
+  name: String,
+  description: String,
+  price: Number,
+  compareAtPrice: Number,
+  stockQuantity: Number,
+  categoryId: String,
+  categoryName: String,
+  image: String,
+  featured: Boolean,
+  createdAt: Date,
+  updatedAt: Date
+}
 ```
 
-3. **Verify database role:**
-```sql
-SELECT u.email, r.role_type 
-FROM users u 
-JOIN role r ON u.role_id = r.id 
-WHERE u.email = 'your@email.com';
--- role_type should be 'ADMIN'
+### **MongoDB - Cart Collection**
+```javascript
+{
+  userId: String,
+  items: [{
+    _id: String,
+    productId: String,
+    name: String,
+    price: Number,
+    quantity: Number,
+    image: String,
+    categoryName: String,
+    stockQuantity: Number
+  }],
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+**Full Schema Documentation:** [View Database Schema](./docs/DATABASE_SCHEMA.md)
+
+---
+
+## 📸 Screenshots
+
+### **Homepage**
+![Homepage](./docs/images/homepage.png)
+
+### **Product Catalog**
+![Products](./docs/images/products.png)
+
+### **Shopping Cart**
+![Cart](./docs/images/cart.png)
+
+### **Checkout Flow**
+![Checkout](./docs/images/checkout.png)
+
+### **Authentication**
+<div align="center">
+  <img src="./docs/images/login.png" width="45%" />
+  <img src="./docs/images/register.png" width="45%" />
+</div>
+
+### **Admin Dashboard**
+![Admin](./docs/images/admin-dashboard.png)
+
+### **Email Templates**
+<div align="center">
+  <img src="./docs/images/otp-email.png" width="45%" />
+  <img src="./docs/images/order-email.png" width="45%" />
+</div>
+
+### **Mobile Responsive**
+<div align="center">
+  <img src="./docs/images/mobile-home.png" width="30%" />
+  <img src="./docs/images/mobile-products.png" width="30%" />
+  <img src="./docs/images/mobile-cart.png" width="30%" />
+</div>
+
+---
+
+## 📁 Project Structure
+```
+ecomart/
+├── ecommerce-backend/                 # Auth Service (Spring Boot)
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/
+│   │   │   │   └── com/backend/ecommerce_backend/
+│   │   │   │       ├── Config/        # Security, CORS, JWT config
+│   │   │   │       ├── Controller/    # REST endpoints
+│   │   │   │       ├── Model/         # Entity classes
+│   │   │   │       ├── Repository/    # JPA repositories
+│   │   │   │       ├── Service/       # Business logic
+│   │   │   │       └── Security/      # JWT filters
+│   │   │   └── resources/
+│   │   │       └── application.properties
+│   │   └── test/
+│   └── pom.xml
+│
+├── ecommerce-backendcheckout/        # Checkout Service (Spring Boot)
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/
+│   │   │   │   └── com/backend/ecommerce_backendcheckout/
+│   │   │   │       ├── Config/
+│   │   │   │       ├── Controller/
+│   │   │   │       ├── Model/
+│   │   │   │       ├── Repository/
+│   │   │   │       └── Service/
+│   │   │   └── resources/
+│   │   │       └── application.properties
+│   └── pom.xml
+│
+├── homepage-service/                  # Homepage Service (Node.js)
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── middleware/
+│   ├── config/
+│   ├── server.js
+│   ├── package.json
+│   │
+│   └── frontend/                      # Main Frontend (React + Vite)
+│       ├── src/
+│       │   ├── components/
+│       │   ├── pages/
+│       │   ├── context/
+│       │   ├── hooks/
+│       │   ├── utils/
+│       │   ├── App.jsx
+│       │   └── main.jsx
+│       ├── public/
+│       ├── index.html
+│       └── package.json
+│
+├── ecommerce-frontend/                # Auth Frontend (React)
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── App.js
+│   │   └── index.js
+│   ├── public/
+│   └── package.json
+│
+├── docs/                              # Documentation
+│   ├── images/                        # Screenshots
+│   ├── API_COLLECTION.json            # Postman collection
+│   └── DATABASE_SCHEMA.md             # Database documentation
+│
+├── .gitignore
+├── README.md
+└── LICENSE
 ```
 
 ---
 
-### **Database Issues**
+## 🧪 Testing
 
-#### **Issue: Table doesn't exist**
-
-**Error:**
-```
-Table 'ecommerce_auth.users' doesn't exist
-```
-
-**Solution:**
+### **Backend Testing**
 ```bash
-# Re-import schema
-mysql -u root -p ecommerce_auth < services/auth-service/database/schema.sql
+# Auth Service tests
+cd ecommerce-backend
+mvn test
 
-# Verify tables
-mysql -u root -p ecommerce_auth -e "SHOW TABLES;"
+# Checkout Service tests
+cd ecommerce-backendcheckout
+mvn test
 ```
 
----
+### **API Testing with Postman**
 
-#### **Issue: Duplicate entry error**
+1. Import the Postman collection: `docs/API_COLLECTION.json`
+2. Set environment variables:
+   - `AUTH_URL`: http://localhost:8080
+   - `CHECKOUT_URL`: http://localhost:8082
+   - `API_URL`: http://localhost:3001
+3. Run the collection
 
-**Error:**
-```
-Duplicate entry 'user@example.com' for key 'users.email'
-```
-
-**Solution:**
-```sql
--- Check existing user
-SELECT * FROM users WHERE email = 'user@example.com';
-
--- Delete if needed
-DELETE FROM users WHERE email = 'user@example.com';
-```
-
----
-
-### **Git Issues**
-
-#### **Issue: Merge conflicts**
-
-**Solution:**
+### **Frontend Testing**
 ```bash
-# Check which files have conflicts
-git status
+# Main frontend
+cd homepage-service/frontend
+npm test
 
-# For each conflicted file, edit and choose correct version
-# Then:
-git add <resolved-file>
-
-# Complete merge
-git commit -m "Resolve merge conflicts"
+# Auth frontend
+cd ecommerce-frontend
+npm test
 ```
 
 ---
 
-#### **Issue: Accidentally committed sensitive files**
+## 🚢 Deployment
 
-**Solution:**
+### **Docker Deployment**
 ```bash
-# Remove from git but keep locally
-git rm --cached services/auth-service/backend-app/src/main/resources/application.properties
+# Build Docker images
+docker-compose build
 
-# Commit removal
-git commit -m "Remove sensitive configuration file"
+# Start all services
+docker-compose up -d
 
-# Push
-git push origin dev
-
-# IMPORTANT: Change all exposed passwords immediately!
+# Stop all services
+docker-compose down
 ```
 
----
+### **Production Deployment Checklist**
 
-### **Common Error Messages**
+- [ ] Change JWT secret to strong random key
+- [ ] Update CORS origins to production URLs
+- [ ] Use environment variables for sensitive data
+- [ ] Set `spring.jpa.hibernate.ddl-auto=validate` in production
+- [ ] Enable HTTPS/SSL
+- [ ] Setup database backups
+- [ ] Configure monitoring (Sentry, Datadog)
+- [ ] Setup CI/CD pipeline (GitHub Actions)
+- [ ] Use production email service (SendGrid, AWS SES)
+- [ ] Implement rate limiting
+- [ ] Add logging aggregation
 
-| Error | Cause | Solution |
-|-------|-------|----------|
-| `EADDRINUSE` | Port already in use | Kill process or change port |
-| `Connection refused` | Service not running | Start MySQL/Backend |
-| `Bad credentials` | Wrong password or user not activated | Check database, verify activation |
-| `CORS error` | Backend not allowing frontend | Check CORS configuration |
-| `404 Not Found` | Wrong API endpoint | Verify URL in frontend |
-| `500 Internal Server Error` | Backend exception | Check backend logs |
-| `JWT expired` | Token expired | Refresh token or login again |
+**Deployment Platforms:**
+- **Backend:** AWS EC2, Google Cloud Run, Heroku
+- **Frontend:** Vercel, Netlify, AWS S3 + CloudFront
+- **Database:** AWS RDS (MySQL), MongoDB Atlas
 
 ---
 
 ## 🤝 Contributing
 
-### **Code Standards**
+Contributions are welcome! Please follow these steps:
 
-#### **Java (Backend)**
-- Follow **Google Java Style Guide**
-- Use **Lombok** annotations to reduce boilerplate
-- Write **JavaDoc** for public methods
-- Use **meaningful variable names**
-
-**Example:**
-```java
-/**
- * Registers a new user with email verification
- * 
- * @param registerDto User registration data
- * @return ResponseEntity with registration status
- */
-@PostMapping("/register")
-public ResponseEntity<?> register(@Valid @RequestBody RegisterDto registerDto) {
-    // Implementation
-}
-```
-
-#### **JavaScript/React (Frontend)**
-- Follow **Airbnb JavaScript Style Guide**
-- Use **functional components** with hooks
-- Write **PropTypes** for components
-- Use **destructuring** for cleaner code
-
-**Example:**
-```javascript
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-
-const UserProfile = ({ userId }) => {
-  const [user, setUser] = useState(null);
-  
-  useEffect(() => {
-    // Fetch user data
-  }, [userId]);
-  
-  return <div>{/* UI */}</div>;
-};
-
-UserProfile.propTypes = {
-  userId: PropTypes.number.isRequired
-};
-
-export default UserProfile;
-```
-
-### **Testing**
-
-#### **Backend Testing**
+1. **Fork the repository**
+2. **Create a feature branch**
 ```bash
-# Run all tests
-mvn test
-
-# Run specific test
-mvn test -Dtest=UserServiceTest
+   git checkout -b feature/AmazingFeature
 ```
-
-#### **Frontend Testing**
+3. **Commit your changes**
 ```bash
-# Run tests
-npm test
-
-# Run tests with coverage
-npm test -- --coverage
+   git commit -m 'Add some AmazingFeature'
 ```
+4. **Push to the branch**
+```bash
+   git push origin feature/AmazingFeature
+```
+5. **Open a Pull Request**
 
-### **Pull Request Checklist**
+### **Code Style Guidelines**
 
-Before creating a PR, ensure:
-
-- [ ] Code follows style guidelines
-- [ ] All tests pass
-- [ ] No console.log() statements in production code
-- [ ] No commented-out code
-- [ ] Updated documentation if needed
-- [ ] No sensitive data (passwords, API keys)
-- [ ] Meaningful commit messages
-- [ ] Feature tested locally
-- [ ] No merge conflicts with dev branch
-
----
-
-## 👨‍💻 Team Members
-
-| Name | Role | GitHub | Responsibilities |
-|------|------|--------|------------------|
-| [Member 1] | Team Lead | @username1 | Architecture, Code Review |
-| [Member 2] | Backend Dev | @username2 | Auth Service, APIs |
-| [Member 3] | Frontend Dev | @username3 | UI/UX, React Components |
-| [Member 4] | Full Stack | @username4 | Integration, Testing |
-
----
-
-## 📞 Support & Contact
-
-### **Having Issues?**
-
-1. **Check Troubleshooting section** above
-2. **Search existing GitHub Issues**
-3. **Create new issue** with details:
-   - What you tried
-   - Error messages
-   - Screenshots
-   - Your environment (OS, versions)
-
-### **Need Help?**
-
-- **GitHub Issues:** https://github.com/ruchita0405/E-commerce-site/issues
-- **Team Chat:** [Your communication platform]
-- **Documentation:** See individual service READMEs
+- Follow Java naming conventions
+- Use ESLint for JavaScript
+- Write meaningful commit messages
+- Add comments for complex logic
+- Update documentation
 
 ---
 
 ## 📄 License
 
-This project is developed as an educational project. All rights reserved.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+```
+MIT License
 
----
+Copyright (c) 2024 [Your Name]
 
-## 🎯 Roadmap
-
-### **Phase 1: Foundation** ✅ (Completed)
-- [x] Project setup and structure
-- [x] Authentication service
-- [x] Email verification
-- [x] Admin dashboard
-- [x] JWT implementation
-
-### **Phase 2: Core Features** 🚧 (In Progress)
-- [ ] Product catalog service
-- [ ] Shopping cart functionality
-- [ ] Order management system
-- [ ] Search and filtering
-- [ ] Product reviews
-
-### **Phase 3: Advanced Features** 📋 (Planned)
-- [ ] Payment gateway integration
-- [ ] Real-time notifications
-- [ ] Analytics dashboard
-- [ ] Recommendation engine
-- [ ] Mobile app (React Native)
-
-### **Phase 4: Optimization** 📋 (Planned)
-- [ ] Performance optimization
-- [ ] Caching implementation
-- [ ] Load balancing
-- [ ] Deployment automation
-- [ ] Monitoring and logging
-
----
-
-## 🔗 Quick Links
-
-- **Repository:** https://github.com/ruchita0405/E-commerce-site
-- **Issues:** https://github.com/ruchita0405/E-commerce-site/issues
-- **Projects:** https://github.com/ruchita0405/E-commerce-site/projects
-- **Wiki:** https://github.com/ruchita0405/E-commerce-site/wiki (if enabled)
-
----
-
-## ⚡ Quick Commands Reference
-
-```bash
-# Clone and setup
-git clone https://github.com/ruchita0405/E-commerce-site.git
-cd E-commerce-site
-git checkout dev
-
-# Database
-mysql -u root -p ecommerce_auth < services/auth-service/database/schema.sql
-
-# Backend
-cd services/auth-service/backend-app
-mvn spring-boot:run
-
-# Frontend (new terminal)
-cd services/auth-service/frontend-react
-npm install && npm start
-
-# Git workflow
-git checkout dev
-git pull origin dev
-git checkout -b feature/my-feature
-git add .
-git commit -m "feat: add my feature"
-git push origin feature/my-feature
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction...
 ```
 
 ---
 
-**Made with ❤️ by Team [Your Team Name]**
+## 👤 Contact
 
-**Last Updated:** December 2024
+**Your Name** - [Your Email](mailto:your.email@example.com)
+
+**Project Link:** [https://github.com/yourusername/ecomart](https://github.com/yourusername/ecomart)
+
+**LinkedIn:** [Your LinkedIn](https://linkedin.com/in/yourprofile)
+
+**Portfolio:** [Your Portfolio](https://yourportfolio.com)
 
 ---
 
 ## 🙏 Acknowledgments
 
-- Spring Boot Documentation
-- React Documentation
-- MySQL Documentation
-- Stack Overflow Community
-- GitHub Community
+- [Spring Boot Documentation](https://spring.io/projects/spring-boot)
+- [React Documentation](https://reactjs.org/)
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [DaisyUI](https://daisyui.com/)
+- Icons by [Heroicons](https://heroicons.com/)
+- Inspiration from various e-commerce platforms
 
 ---
 
-**Happy Coding! 🚀**
+## 📊 Project Statistics
+
+- **Total Lines of Code:** ~5,000+
+- **Backend Services:** 3
+- **Frontend Applications:** 2
+- **API Endpoints:** 25+
+- **Database Collections/Tables:** 6
+- **React Components:** 20+
+- **Development Time:** [Your timeline]
+
+---
+
+## 🎓 Learning Outcomes
+
+This project demonstrates proficiency in:
+
+✅ **Microservices Architecture**  
+✅ **RESTful API Design**  
+✅ **JWT Authentication**  
+✅ **Database Design (SQL & NoSQL)**  
+✅ **Frontend Development with React**  
+✅ **State Management (Context API)**  
+✅ **Responsive UI Design**  
+✅ **Email Integration**  
+✅ **Security Best Practices**  
+✅ **Git Version Control**
+
+---
+
+<div align="center">
+
+### ⭐ Star this repository if you found it helpful!
+
+**Made with ❤️ by Varad Jumbad, Ruchita Kamble, KartarSingh Gothwal
+
+[⬆ Back to Top](#-ecomart---e-commerce-platform)
+
+</div>
