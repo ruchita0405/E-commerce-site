@@ -36,6 +36,7 @@
 - [Project Structure](#-project-structure)
 - [Testing](#-testing)
 - [Deployment](#-deployment)
+- [Security](#-security)
 - [Contributing](#-contributing)
 - [License](#-license)
 - [Contact](#-contact)
@@ -48,11 +49,11 @@
 
 ### 🎯 Project Goals
 
-- Demonstrate microservices architecture
-- Implement secure authentication with JWT
-- Build responsive, animated user interfaces
-- Showcase integration of multiple technologies
-- Create production-ready, scalable code
+- Demonstrate microservices architecture with clear separation of concerns
+- Implement secure authentication with JWT tokens and email verification
+- Build responsive, animated user interfaces with modern CSS frameworks
+- Showcase integration of SQL and NoSQL databases
+- Create production-ready, scalable code following industry best practices
 
 ---
 
@@ -60,34 +61,34 @@
 
 ### 🔐 Authentication & Security
 - ✅ User registration with email validation
-- ✅ OTP-based email verification
-- ✅ JWT token authentication
-- ✅ Password hashing with BCrypt
+- ✅ OTP-based email verification (6-digit code, 10-minute expiry)
+- ✅ JWT token authentication with 24-hour expiration
+- ✅ Password hashing with BCrypt (10 rounds)
 - ✅ Role-based access control (Customer/Admin)
-- ✅ Secure session management
+- ✅ Secure session management (stateless)
 
 ### 🛒 E-Commerce Functionality
-- ✅ Product catalog with categories
-- ✅ Advanced search and filtering
+- ✅ Product catalog with category filtering
+- ✅ Advanced search functionality
 - ✅ Shopping cart with real-time updates
-- ✅ Stock management
+- ✅ Stock management and validation
 - ✅ Order placement and tracking
-- ✅ Email order confirmations
+- ✅ Email order confirmations with HTML templates
 
 ### 👨‍💼 Admin Features
 - ✅ User management dashboard
 - ✅ Product CRUD operations
-- ✅ Stock updates
+- ✅ Stock updates and monitoring
 - ✅ Order management
-- ✅ User role assignment
+- ✅ User role assignment and management
 
 ### 🎨 User Experience
 - ✅ Responsive design (mobile, tablet, desktop)
 - ✅ Smooth animations and transitions
-- ✅ Dark mode support
-- ✅ Loading states and error handling
-- ✅ Toast notifications
-- ✅ Form validation
+- ✅ DaisyUI component library
+- ✅ Loading states and skeleton screens
+- ✅ Error handling with user-friendly messages
+- ✅ Form validation (client & server-side)
 
 ---
 
@@ -143,9 +144,15 @@
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### Service Communication Flow
+### Service Responsibilities
 
-![Architecture Flow](./docs/images/architecture-flow.png)
+| Service | Port | Technology | Purpose |
+|---------|------|------------|---------|
+| **Auth Service** | 8080 | Spring Boot + MySQL | User authentication, JWT generation, OTP verification |
+| **Checkout Service** | 8082 | Spring Boot + MongoDB | Product management, stock updates, order emails |
+| **Homepage Service** | 3001 | Node.js + MongoDB | Product catalog, cart operations, order processing |
+| **Auth Frontend** | 3000 | React | Login, registration, OTP verification, admin panel |
+| **Main Frontend** | 5173 | React + Vite | Product browsing, cart, checkout, order history |
 
 ---
 
@@ -157,29 +164,40 @@
 |------------|---------|---------|
 | ![Java](https://img.shields.io/badge/Java-17-orange?logo=java) | 17 | Programming Language |
 | ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.1.5-brightgreen?logo=springboot) | 3.1.5 | Backend Framework |
+| ![Spring Security](https://img.shields.io/badge/Spring%20Security-6.x-green?logo=springsecurity) | 6.x | Security & Authentication |
 | ![Node.js](https://img.shields.io/badge/Node.js-18.x-green?logo=node.js) | 18.x | JavaScript Runtime |
 | ![Express](https://img.shields.io/badge/Express-4.x-lightgrey?logo=express) | 4.x | Web Framework |
 | ![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?logo=mysql) | 8.0 | Relational Database |
 | ![MongoDB](https://img.shields.io/badge/MongoDB-6.x-green?logo=mongodb) | 6.x | NoSQL Database |
-| ![JWT](https://img.shields.io/badge/JWT-Auth-black?logo=jsonwebtokens) | - | Authentication |
+| ![JWT](https://img.shields.io/badge/JWT-Auth-black?logo=jsonwebtokens) | - | Token Authentication |
+| ![BCrypt](https://img.shields.io/badge/BCrypt-Hashing-red) | - | Password Encryption |
 
 ### **Frontend**
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
 | ![React](https://img.shields.io/badge/React-18.2-blue?logo=react) | 18.2 | UI Library |
-| ![Vite](https://img.shields.io/badge/Vite-4.x-purple?logo=vite) | 4.x | Build Tool |
+| ![Vite](https://img.shields.io/badge/Vite-4.x-purple?logo=vite) | 4.x | Build Tool & Dev Server |
 | ![TailwindCSS](https://img.shields.io/badge/Tailwind-3.x-cyan?logo=tailwindcss) | 3.x | CSS Framework |
 | ![DaisyUI](https://img.shields.io/badge/DaisyUI-3.x-5A0EF8?logo=daisyui) | 3.x | Component Library |
 | ![Axios](https://img.shields.io/badge/Axios-1.x-purple?logo=axios) | 1.x | HTTP Client |
+| ![React Router](https://img.shields.io/badge/React%20Router-6.x-red?logo=reactrouter) | 6.x | Client-side Routing |
 
-### **Additional Tools**
+### **Development Tools**
 
-- **Maven** - Build automation for Java
+- **Maven** - Build automation for Java projects
 - **npm** - Package manager for JavaScript
-- **Postman** - API testing
-- **Git** - Version control
-- **Gmail SMTP** - Email service
+- **Git** - Version control system
+- **Postman** - API testing and documentation
+- **VS Code** - Primary code editor
+- **MySQL Workbench** - Database management
+- **MongoDB Compass** - MongoDB GUI
+
+### **Email Service**
+
+- **JavaMailSender** - Spring Boot email integration
+- **Gmail SMTP** - Email delivery service
+- **HTML Templates** - Rich email formatting
 
 ---
 
@@ -187,245 +205,601 @@
 
 Before you begin, ensure you have the following installed:
 
+### **Required Software**
+
 - **Java Development Kit (JDK)** 17 or higher
 ```bash
   java -version
+  # Expected: java version "17.0.x" or higher
 ```
 
 - **Node.js** 18.x or higher & npm
 ```bash
-  node --version
-  npm --version
+  node --version  # Should be v18.x or higher
+  npm --version   # Should be 9.x or higher
 ```
 
 - **MySQL** 8.0 or higher
 ```bash
   mysql --version
+  # Expected: mysql Ver 8.0.x
 ```
 
 - **Maven** 3.8 or higher
 ```bash
   mvn --version
+  # Expected: Apache Maven 3.8.x or higher
 ```
 
 - **Git**
 ```bash
   git --version
+  # Expected: git version 2.x.x
 ```
 
-- **MongoDB Atlas Account** (Free tier)
-  - Sign up at [https://www.mongodb.com/cloud/atlas](https://www.mongodb.com/cloud/atlas)
+### **Required Accounts**
 
-- **Gmail Account** with App Password enabled
+- **MongoDB Atlas Account** (Free tier available)
+  - Sign up at [https://www.mongodb.com/cloud/atlas](https://www.mongodb.com/cloud/atlas)
+  - Create a free M0 cluster
+
+- **Gmail Account** with App Password
+  - Enable 2-Step Verification
+  - Generate App Password for SMTP access
 
 ---
 
 ## 🚀 Installation
 
-### 1. Clone the Repository
+### **Step 1: Clone the Repository**
 ```bash
 git clone https://github.com/yourusername/ecomart.git
 cd ecomart
 ```
 
-### 2. Setup MySQL Database
-```sql
--- Login to MySQL
+### **Step 2: Setup MySQL Database**
+```bash
+# Login to MySQL
 mysql -u root -p
 
+# Execute the following SQL commands
+```
+```sql
 -- Create database
 CREATE DATABASE ecommerce_auth;
 
--- Create user (optional)
-CREATE USER 'ecomart'@'localhost' IDENTIFIED BY 'your_password';
-GRANT ALL PRIVILEGES ON ecommerce_auth.* TO 'ecomart'@'localhost';
+-- Optional: Create dedicated user
+CREATE USER 'ecomart_user'@'localhost' IDENTIFIED BY 'your_secure_password';
+GRANT ALL PRIVILEGES ON ecommerce_auth.* TO 'ecomart_user'@'localhost';
 FLUSH PRIVILEGES;
+
+-- Verify database creation
+SHOW DATABASES;
 
 -- Exit MySQL
 EXIT;
 ```
 
-### 3. Setup MongoDB Atlas
+### **Step 3: Setup MongoDB Atlas**
 
-1. Create a free cluster at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-2. Create a database user
-3. Whitelist your IP address (or use `0.0.0.0/0` for development)
-4. Get your connection string (looks like: `mongodb+srv://user:password@cluster.mongodb.net/`)
+1. **Create Cluster**
+   - Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+   - Create a free M0 cluster (512 MB storage)
+   - Choose a cloud provider and region (closest to you)
 
-### 4. Setup Gmail App Password
+2. **Create Database User**
+   - Go to "Database Access"
+   - Click "Add New Database User"
+   - Choose "Password" authentication
+   - Set username and password (save these!)
+   - Grant "Atlas admin" or "Read and write to any database"
 
-1. Go to [Google Account Security](https://myaccount.google.com/security)
-2. Enable **2-Step Verification**
-3. Go to **App Passwords**
-4. Generate a password for "Mail"
-5. Save the 16-character password
+3. **Configure Network Access**
+   - Go to "Network Access"
+   - Click "Add IP Address"
+   - For development: Click "Allow Access from Anywhere" (0.0.0.0/0)
+   - For production: Add your specific IP address
+
+4. **Get Connection String**
+   - Go to "Database" → Click "Connect"
+   - Choose "Connect your application"
+   - Copy the connection string
+   - Format: `mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<database>`
+
+### **Step 4: Setup Gmail App Password**
+
+1. **Enable 2-Step Verification**
+   - Go to [Google Account Security](https://myaccount.google.com/security)
+   - Click "2-Step Verification" → Enable it
+
+2. **Generate App Password**
+   - Go to [App Passwords](https://myaccount.google.com/apppasswords)
+   - Select "Mail" and "Other (Custom name)"
+   - Enter "EcoMart Application"
+   - Click "Generate"
+   - **Save the 16-character password** (format: xxxx xxxx xxxx xxxx)
+
+3. **Important Notes**
+   - Remove spaces from app password when using in config
+   - Never share this password
+   - You can revoke and regenerate anytime
 
 ---
 
 ## ⚙️ Configuration
 
-### **1. Auth Service Configuration**
+### **Step 1: Create Configuration Files**
+
+Navigate to each service directory and create configuration files from examples:
+```bash
+# Auth Service
+cd ecommerce-backend/src/main/resources
+cp application.properties.example application.properties
+
+# Checkout Service
+cd ../../../ecommerce-backendcheckout/src/main/resources
+cp application.properties.example application.properties
+
+# Homepage Service
+cd ../../../homepage-service
+cp .env.example .env
+```
+
+### **Step 2: Configure Auth Service**
 
 **File:** `ecommerce-backend/src/main/resources/application.properties`
 ```properties
-# Server
+# ==========================================
+# APPLICATION CONFIGURATION
+# ==========================================
+spring.application.name=ecommerce-backend
 server.port=8080
 
-# MySQL Database
-spring.datasource.url=jdbc:mysql://localhost:3306/ecommerce_auth
+# ==========================================
+# MYSQL DATABASE CONFIGURATION
+# ==========================================
+spring.datasource.url=jdbc:mysql://localhost:3306/ecommerce_auth?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
 spring.datasource.username=root
-spring.datasource.password=your_mysql_password
+spring.datasource.password=YOUR_MYSQL_PASSWORD
 
-# JPA/Hibernate
+# MySQL Driver
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# ==========================================
+# JPA/HIBERNATE CONFIGURATION
+# ==========================================
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+spring.jpa.properties.hibernate.format_sql=true
 
-# JWT Configuration
-jwt.secret=your_super_secret_key_min_256_bits_change_in_production
-jwt.expiration=86400000
+# Connection Pool
+spring.datasource.hikari.maximum-pool-size=10
+spring.datasource.hikari.minimum-idle=5
+spring.datasource.hikari.connection-timeout=30000
 
-# Email Configuration
+# ==========================================
+# EMAIL CONFIGURATION (Gmail SMTP)
+# ==========================================
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587
-spring.mail.username=your_email@gmail.com
-spring.mail.password=your_16_digit_app_password
+spring.mail.username=YOUR_EMAIL@gmail.com
+spring.mail.password=YOUR_16_DIGIT_APP_PASSWORD
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.starttls.required=true
+spring.mail.properties.mail.smtp.ssl.trust=smtp.gmail.com
 
-# CORS
+# Email Timeouts
+spring.mail.properties.mail.smtp.connectiontimeout=5000
+spring.mail.properties.mail.smtp.timeout=5000
+spring.mail.properties.mail.smtp.writetimeout=5000
+
+# ==========================================
+# JWT CONFIGURATION
+# ==========================================
+# Generate a strong secret key (minimum 256 bits)
+# You can use: openssl rand -base64 64
+jwt.secret=CHANGE_THIS_TO_A_STRONG_RANDOM_SECRET_KEY_MIN_256_BITS
+jwt.expiration=86400000
+# 86400000 ms = 24 hours
+
+# ==========================================
+# CORS CONFIGURATION
+# ==========================================
 cors.allowed.origins=http://localhost:3000,http://localhost:5173
+cors.allowed.methods=GET,POST,PUT,DELETE,PATCH,OPTIONS
+cors.allowed.headers=*
+cors.allow.credentials=true
+
+# ==========================================
+# LOGGING CONFIGURATION
+# ==========================================
+logging.level.root=INFO
+logging.level.com.backend.ecommerce_backend=DEBUG
+logging.level.org.springframework.web=DEBUG
+
+# Log file
+logging.file.name=logs/ecommerce-backend.log
+
+# ==========================================
+# ACTUATOR (Health Check)
+# ==========================================
+management.endpoints.web.exposure.include=health,info
+management.endpoint.health.show-details=always
+
+# ==========================================
+# ERROR HANDLING
+# ==========================================
+server.error.include-message=always
+server.error.include-binding-errors=always
 ```
 
-### **2. Checkout Service Configuration**
+**Replace these placeholders:**
+- `YOUR_MYSQL_PASSWORD` → Your MySQL root password
+- `YOUR_EMAIL@gmail.com` → Your Gmail address
+- `YOUR_16_DIGIT_APP_PASSWORD` → Gmail app password (remove spaces)
+- `CHANGE_THIS_TO_A_STRONG_RANDOM_SECRET_KEY_MIN_256_BITS` → Generate using: `openssl rand -base64 64`
+
+### **Step 3: Configure Checkout Service**
 
 **File:** `ecommerce-backendcheckout/src/main/resources/application.properties`
 ```properties
-# Server
+# ==========================================
+# APPLICATION CONFIGURATION
+# ==========================================
+spring.application.name=ecommerce-backend-checkout
 server.port=8082
 
-# MongoDB Atlas
-spring.data.mongodb.uri=mongodb+srv://username:password@cluster.mongodb.net/test?retryWrites=true&w=majority
+# ==========================================
+# MONGODB ATLAS CONFIGURATION
+# ==========================================
+# Format: mongodb+srv://USERNAME:PASSWORD@CLUSTER.mongodb.net/DATABASE
+spring.data.mongodb.uri=mongodb+srv://YOUR_MONGODB_USERNAME:YOUR_MONGODB_PASSWORD@YOUR_CLUSTER.mongodb.net/ecomart?retryWrites=true&w=majority&connectTimeoutMS=2000&socketTimeoutMS=2000&serverSelectionTimeoutMS=2000
 
-# Email Configuration (same as Auth Service)
+# Explicit database name
+spring.data.mongodb.database=ecomart
+
+# Disable auto-index creation for faster startup
+spring.data.mongodb.auto-index-creation=false
+
+# ==========================================
+# EMAIL CONFIGURATION (Gmail SMTP)
+# ==========================================
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587
-spring.mail.username=your_email@gmail.com
-spring.mail.password=your_16_digit_app_password
+spring.mail.username=YOUR_EMAIL@gmail.com
+spring.mail.password=YOUR_16_DIGIT_APP_PASSWORD
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.starttls.required=true
+spring.mail.properties.mail.smtp.ssl.trust=smtp.gmail.com
+
+# Email Timeouts
+spring.mail.properties.mail.smtp.connectiontimeout=5000
+spring.mail.properties.mail.smtp.timeout=5000
+spring.mail.properties.mail.smtp.writetimeout=5000
+
+# ==========================================
+# LOGGING CONFIGURATION
+# ==========================================
+logging.level.root=INFO
+logging.level.org.mongodb.driver=ERROR
+logging.level.org.springframework.data.mongodb=ERROR
+
+# ==========================================
+# CORS CONFIGURATION
+# ==========================================
+cors.allowed.origins=http://localhost:3000,http://localhost:5173
 ```
 
-### **3. Homepage Service Configuration**
+**Replace these placeholders:**
+- `YOUR_MONGODB_USERNAME` → MongoDB Atlas username
+- `YOUR_MONGODB_PASSWORD` → MongoDB Atlas password (URL encode special characters)
+- `YOUR_CLUSTER` → Your cluster name (e.g., cluster0.xxxxx)
+- `YOUR_EMAIL@gmail.com` → Your Gmail address
+- `YOUR_16_DIGIT_APP_PASSWORD` → Gmail app password
+
+**Note:** If your MongoDB password contains special characters, URL encode them:
+- `@` → `%40`
+- `:` → `%3A`
+- `/` → `%2F`
+- `?` → `%3F`
+- `#` → `%23`
+
+### **Step 4: Configure Homepage Service**
 
 **File:** `homepage-service/.env`
 ```env
+# Server Configuration
 PORT=3001
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/test?retryWrites=true&w=majority
-JWT_SECRET=your_super_secret_key_min_256_bits_change_in_production
+NODE_ENV=development
+
+# MongoDB Atlas Configuration
+MONGODB_URI=mongodb+srv://YOUR_MONGODB_USERNAME:YOUR_MONGODB_PASSWORD@YOUR_CLUSTER.mongodb.net/ecomart?retryWrites=true&w=majority
+
+# JWT Configuration
+# Must match the secret in Auth Service
+JWT_SECRET=CHANGE_THIS_TO_A_STRONG_RANDOM_SECRET_KEY_MIN_256_BITS
+
+# CORS Configuration
+ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
+
+# Email Configuration (Optional - for Node.js email service)
+GMAIL_USER=YOUR_EMAIL@gmail.com
+GMAIL_PASSWORD=YOUR_16_DIGIT_APP_PASSWORD
 ```
 
-### **4. Frontend Configuration**
+**Replace these placeholders:**
+- `YOUR_MONGODB_USERNAME` → Same as checkout service
+- `YOUR_MONGODB_PASSWORD` → Same as checkout service
+- `YOUR_CLUSTER` → Same as checkout service
+- `CHANGE_THIS_TO_A_STRONG_RANDOM_SECRET_KEY_MIN_256_BITS` → **Same secret as Auth Service**
+- `YOUR_EMAIL@gmail.com` → Your Gmail address
+- `YOUR_16_DIGIT_APP_PASSWORD` → Gmail app password
+
+### **Step 5: Configure Frontend Applications**
 
 **Auth Frontend - File:** `ecommerce-frontend/src/config.js`
 ```javascript
+// API Configuration
 export const API_BASE_URL = 'http://localhost:8080/api';
+
+// Auth Endpoints
+export const AUTH_ENDPOINTS = {
+  register: '/auth/register',
+  login: '/auth/login',
+  verifyOtp: '/auth/verify-otp',
+  resendOtp: '/auth/resend-otp'
+};
+
+// Admin Endpoints
+export const ADMIN_ENDPOINTS = {
+  users: '/admin/users',
+  updateRole: '/admin/users/:id/role',
+  deleteUser: '/admin/users/:id'
+};
 ```
 
 **Main Frontend - File:** `homepage-service/frontend/src/config.js`
 ```javascript
+// API Configuration
 export const API_BASE_URL = 'http://localhost:3001/api';
 export const AUTH_API_URL = 'http://localhost:8080/api';
 export const CHECKOUT_API_URL = 'http://localhost:8082/api';
+
+// Product Endpoints
+export const PRODUCT_ENDPOINTS = {
+  getAll: '/products',
+  getById: '/products/:id',
+  getFeatured: '/products/featured',
+  getByCategory: '/products/category/:categoryId'
+};
+
+// Cart Endpoints
+export const CART_ENDPOINTS = {
+  getCart: '/cart/:userId',
+  addItem: '/cart/:userId/items',
+  updateItem: '/cart/:userId/items/:itemId',
+  removeItem: '/cart/:userId/items/:itemId',
+  clearCart: '/cart/:userId'
+};
+
+// Order Endpoints
+export const ORDER_ENDPOINTS = {
+  create: '/orders',
+  getUserOrders: '/orders/user/:userId'
+};
+
+// Email Endpoints
+export const EMAIL_ENDPOINTS = {
+  sendOrderEmail: '/email/send-order-email'
+};
 ```
 
 ---
 
 ## 🎮 Running the Application
 
-### **Start All Services**
+### **Important: Start Services in Order**
 
-#### **Terminal 1: Auth Service (Port 8080)**
+Services must be started in the following order to ensure proper initialization:
+
+1. **MySQL** (should already be running)
+2. **Auth Service** (Port 8080)
+3. **Checkout Service** (Port 8082)
+4. **Homepage Service** (Port 3001)
+5. **Auth Frontend** (Port 3000)
+6. **Main Frontend** (Port 5173)
+
+### **Terminal 1: Auth Service**
 ```bash
 cd ecommerce-backend
+
+# Clean and install dependencies
 mvn clean install
+
+# Run the service
 mvn spring-boot:run
 ```
 
 **Expected Output:**
 ```
-✅ Started EcommerceBackendApplication in 3.5 seconds
-🚀 Auth Service running on http://localhost:8080
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.1.5)
+
+2024-12-06 10:30:00.000  INFO 12345 --- [main] Started EcommerceBackendApplication in 3.5 seconds
+✅ Auth Service running on http://localhost:8080
 ```
 
-#### **Terminal 2: Checkout Service (Port 8082)**
+**Health Check:**
+```bash
+curl http://localhost:8080/api/auth/health
+# Expected: "Auth Service is running!"
+```
+
+### **Terminal 2: Checkout Service**
 ```bash
 cd ecommerce-backendcheckout
+
+# Clean and install dependencies
 mvn clean install
+
+# Run the service
 mvn spring-boot:run
 ```
 
 **Expected Output:**
 ```
-✅ Started EcommerceBackendcheckoutApplication in 2.1 seconds
-🚀 Checkout Service running on http://localhost:8082
+2024-12-06 10:31:00.000  INFO 12346 --- [main] Started EcommerceBackendcheckoutApplication in 2.1 seconds
+✅ MongoDB configured with 2-second timeouts
+✅ Checkout Service running on http://localhost:8082
 ```
 
-#### **Terminal 3: Homepage Service (Port 3001)**
+**Health Check:**
+```bash
+curl http://localhost:8082/api/products
+# Expected: [] (empty array or list of products)
+```
+
+### **Terminal 3: Homepage Service**
 ```bash
 cd homepage-service
+
+# Install dependencies (first time only)
 npm install
+
+# Start the service
 npm start
 ```
 
 **Expected Output:**
 ```
+> homepage-service@1.0.0 start
+> node server.js
+
 ✅ Server is running on port 3001
 ✅ MongoDB connected successfully
+✅ Database: ecomart
 ```
 
-#### **Terminal 4: Auth Frontend (Port 3000)**
+**Health Check:**
+```bash
+curl http://localhost:3001/api/products
+# Expected: JSON array of products
+```
+
+### **Terminal 4: Auth Frontend**
 ```bash
 cd ecommerce-frontend
+
+# Install dependencies (first time only)
 npm install
+
+# Start the development server
 npm start
 ```
 
 **Expected Output:**
 ```
-✅ Compiled successfully!
-🌐 Local: http://localhost:3000
+Compiled successfully!
+
+You can now view ecommerce-frontend in the browser.
+
+  Local:            http://localhost:3000
+  On Your Network:  http://192.168.x.x:3000
+
+Note that the development build is not optimized.
+To create a production build, use npm run build.
+
+webpack compiled successfully
 ```
 
-#### **Terminal 5: Main Frontend (Port 5173)**
+**Verify:**
+Open browser: http://localhost:3000
+
+### **Terminal 5: Main Frontend**
 ```bash
 cd homepage-service/frontend
+
+# Install dependencies (first time only)
 npm install
+
+# Start the development server
 npm run dev
 ```
 
 **Expected Output:**
 ```
-✅ VITE v4.5.0 ready in 450 ms
-🌐 Local: http://localhost:5173
+  VITE v4.5.0  ready in 450 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://192.168.x.x:5173/
+  ➜  press h to show help
 ```
 
-### **Verify All Services**
+**Verify:**
+Open browser: http://localhost:5173
 
-Open your browser and check:
+---
 
-- ✅ Auth Service: http://localhost:8080/api/auth/health
-- ✅ Checkout Service: http://localhost:8082/api/products
-- ✅ Homepage Service: http://localhost:3001/api/products
-- ✅ Auth Frontend: http://localhost:3000
-- ✅ Main Frontend: http://localhost:5173
+## ✅ Verify All Services
+
+### **Quick Check - Open These URLs:**
+
+| Service | URL | Expected Result |
+|---------|-----|----------------|
+| Auth Service | http://localhost:8080/api/auth/health | "Auth Service is running!" |
+| Checkout Service | http://localhost:8082/api/products | Empty array `[]` or product list |
+| Homepage Service | http://localhost:3001/api/products | Product list JSON |
+| Auth Frontend | http://localhost:3000 | Login/Register page |
+| Main Frontend | http://localhost:5173 | EcoMart homepage |
+
+### **Test the Complete Flow:**
+
+1. **Register a new user** (http://localhost:3000/register)
+   - Enter name, email, password
+   - Check email for OTP
+
+2. **Verify OTP** (http://localhost:3000/verify-otp)
+   - Enter the 6-digit code from email
+   - Account should be activated
+
+3. **Login** (http://localhost:3000/login)
+   - Use registered email and password
+   - Should receive JWT token
+
+4. **Browse Products** (http://localhost:5173)
+   - View product catalog
+   - Add items to cart
+
+5. **Checkout** (http://localhost:5173/cart)
+   - Proceed to checkout
+   - Fill shipping details
+   - Place order
+   - Check email for confirmation
 
 ---
 
 ## 📚 API Documentation
 
+### **Base URLs**
+```
+Auth Service:     http://localhost:8080/api
+Checkout Service: http://localhost:8082/api
+Homepage Service: http://localhost:3001/api
+```
+
 ### **Authentication Endpoints**
 
-#### **Register User**
+#### **1. Register User**
 ```http
-POST http://localhost:8080/api/auth/register
+POST /auth/register
 Content-Type: application/json
 
 {
@@ -435,17 +809,17 @@ Content-Type: application/json
 }
 ```
 
-**Response:**
+**Response: 201 Created**
 ```json
 {
   "success": true,
-  "message": "Registration successful. Check email for OTP."
+  "message": "Registration successful. Please check your email for OTP."
 }
 ```
 
-#### **Verify OTP**
+#### **2. Verify OTP**
 ```http
-POST http://localhost:8080/api/auth/verify-otp
+POST /auth/verify-otp
 Content-Type: application/json
 
 {
@@ -454,9 +828,17 @@ Content-Type: application/json
 }
 ```
 
-#### **Login**
+**Response: 200 OK**
+```json
+{
+  "success": true,
+  "message": "Account activated successfully. You can now login."
+}
+```
+
+#### **3. Login**
 ```http
-POST http://localhost:8080/api/auth/login
+POST /auth/login
 Content-Type: application/json
 
 {
@@ -465,7 +847,7 @@ Content-Type: application/json
 }
 ```
 
-**Response:**
+**Response: 200 OK**
 ```json
 {
   "success": true,
@@ -480,85 +862,324 @@ Content-Type: application/json
 }
 ```
 
+#### **4. Resend OTP**
+```http
+POST /auth/resend-otp?email=john@example.com
+```
+
+**Response: 200 OK**
+```json
+{
+  "success": true,
+  "message": "OTP sent successfully. Please check your email."
+}
+```
+
 ### **Product Endpoints**
 
-#### **Get All Products**
+#### **1. Get All Products**
 ```http
-GET http://localhost:3001/api/products
+GET /products
 ```
 
-#### **Get Product by ID**
-```http
-GET http://localhost:3001/api/products/{id}
+**Response: 200 OK**
+```json
+[
+  {
+    "_id": "123",
+    "name": "Bamboo Toothbrush",
+    "description": "Eco-friendly bamboo toothbrush with soft bristles",
+    "price": 199,
+    "compareAtPrice": 299,
+    "stockQuantity": 100,
+    "categoryId": "cat123",
+    "categoryName": "Personal Care",
+    "image": "https://example.com/image.jpg",
+    "featured": true,
+    "createdAt": "2024-12-01T10:00:00Z",
+    "updatedAt": "2024-12-01T10:00:00Z"
+  }
+]
 ```
 
-#### **Create Product (Admin)**
+#### **2. Get Product by ID**
 ```http
-POST http://localhost:8082/api/products
+GET /products/{productId}
+```
+
+#### **3. Get Featured Products**
+```http
+GET /products/featured?limit=10
+```
+
+#### **4. Create Product (Admin)**
+```http
+POST /products
 Authorization: Bearer {jwt_token}
 Content-Type: application/json
 
 {
-  "name": "Bamboo Toothbrush",
-  "description": "Eco-friendly bamboo toothbrush",
-  "price": 199,
-  "stockQuantity": 100,
-  "categoryId": "123",
-  "image": "https://example.com/image.jpg"
+  "name": "Reusable Water Bottle",
+  "description": "Stainless steel water bottle",
+  "price": 599,
+  "compareAtPrice": 799,
+  "stockQuantity": 50,
+  "categoryId": "cat456",
+  "categoryName": "Kitchen",
+  "image": "https://example.com/bottle.jpg",
+  "featured": false
+}
+```
+
+#### **5. Update Stock**
+```http
+PATCH /products/{productId}/stock
+Content-Type: application/json
+
+{
+  "stockQuantity": 45
+}
+```
+
+**Response: 200 OK**
+```json
+{
+  "success": true,
+  "message": "Stock updated successfully",
+  "data": {
+    "_id": "123",
+    "stockQuantity": 45
+  }
 }
 ```
 
 ### **Cart Endpoints**
 
-#### **Get User Cart**
+#### **1. Get User Cart**
 ```http
-GET http://localhost:3001/api/cart/{userId}
+GET /cart/{userId}
 Authorization: Bearer {jwt_token}
 ```
 
-#### **Add to Cart**
+**Response: 200 OK**
+```json
+{
+  "userId": "1",
+  "items": [
+    {
+      "_id": "item123",
+      "productId": "prod456",
+      "name": "Bamboo Toothbrush",
+      "price": 199,
+      "quantity": 2,
+      "image": "https://example.com/image.jpg",
+      "categoryName": "Personal Care",
+      "stockQuantity": 98
+    }
+  ],
+  "createdAt": "2024-12-06T10:00:00Z",
+  "updatedAt": "2024-12-06T10:30:00Z"
+}
+```
+
+#### **2. Add to Cart**
 ```http
-POST http://localhost:3001/api/cart/{userId}/items
+POST /cart/{userId}/items
 Authorization: Bearer {jwt_token}
 Content-Type: application/json
 
 {
-  "productId": "123",
+  "productId": "prod456",
   "quantity": 2
 }
 ```
 
+#### **3. Update Cart Item**
+```http
+PUT /cart/{userId}/items/{itemId}
+Authorization: Bearer {jwt_token}
+Content-Type: application/json
+
+{
+  "quantity": 3
+}
+```
+
+#### **4. Remove from Cart**
+```http
+DELETE /cart/{userId}/items/{itemId}
+Authorization: Bearer {jwt_token}
+```
+
+#### **5. Clear Cart**
+```http
+DELETE /cart/{userId}
+Authorization: Bearer {jwt_token}
+```
+
 ### **Order Endpoints**
 
-#### **Create Order**
+#### **1. Create Order**
 ```http
-POST http://localhost:3001/api/orders
+POST /orders
 Authorization: Bearer {jwt_token}
 Content-Type: application/json
 
 {
   "userId": "1",
-  "items": [...],
-  "totalAmount": 999,
-  "address": {...}
+  "customerName": "John Doe",
+  "email": "john@example.com",
+  "items": [
+    {
+      "productId": "prod456",
+      "name": "Bamboo Toothbrush",
+      "price": 199,
+      "quantity": 2
+    }
+  ],
+  "totalAmount": 398,
+  "address": {
+    "street": "123 Main St",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "zipCode": "400001",
+    "country": "India"
+  }
 }
 ```
 
-#### **Send Order Email**
+**Response: 201 Created**
+```json
+{
+  "success": true,
+  "message": "Order placed successfully",
+  "data": {
+    "orderId": 1234567890,
+    "status": "PENDING",
+    "createdAt": "2024-12-06T10:30:00Z"
+  }
+}
+```
+
+#### **2. Get User Orders**
 ```http
-POST http://localhost:8082/api/email/send-order-email
+GET /orders/user/{userId}
+Authorization: Bearer {jwt_token}
+```
+
+### **Email Endpoints**
+
+#### **Send Order Confirmation Email**
+```http
+POST /email/send-order-email
 Content-Type: application/json
 
 {
   "to": "customer@example.com",
   "customerName": "John Doe",
-  "orderId": 123456,
-  "totalAmount": 999,
-  "items": [...]
+  "orderId": 1234567890,
+  "totalAmount": 398,
+  "items": [
+    {
+      "name": "Bamboo Toothbrush",
+      "quantity": 2,
+      "price": 199
+    }
+  ]
 }
 ```
 
-**Full API Documentation:** [View Postman Collection](./docs/API_COLLECTION.json)
+**Response: 200 OK**
+```json
+{
+  "success": true,
+  "message": "Order email sent successfully!"
+}
+```
+
+### **Admin Endpoints**
+
+#### **1. Get All Users**
+```http
+GET /admin/users
+Authorization: Bearer {admin_jwt_token}
+```
+
+**Response: 200 OK**
+```json
+{
+  "success": true,
+  "message": "Users fetched successfully",
+  "data": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john@example.com",
+      "role": "CUSTOMER",
+      "isActive": true,
+      "createdAt": "2024-12-01T10:00:00"
+    }
+  ]
+}
+```
+
+#### **2. Update User Role**
+```http
+PUT /admin/users/{userId}/role?role=ADMIN
+Authorization: Bearer {admin_jwt_token}
+```
+
+#### **3. Delete User**
+```http
+DELETE /admin/users/{userId}
+Authorization: Bearer {admin_jwt_token}
+```
+
+### **Error Responses**
+
+**400 Bad Request**
+```json
+{
+  "success": false,
+  "message": "Invalid input data",
+  "errors": [
+    "Email is required",
+    "Password must be at least 6 characters"
+  ]
+}
+```
+
+**401 Unauthorized**
+```json
+{
+  "success": false,
+  "message": "Invalid email or password"
+}
+```
+
+**403 Forbidden**
+```json
+{
+  "success": false,
+  "message": "Access denied. Admin role required."
+}
+```
+
+**404 Not Found**
+```json
+{
+  "success": false,
+  "message": "User not found"
+}
+```
+
+**500 Internal Server Error**
+```json
+{
+  "success": false,
+  "message": "An error occurred while processing your request"
+}
+```
 
 ---
 
@@ -571,7 +1192,7 @@ CREATE TABLE users (
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role VARCHAR(50) DEFAULT 'CUSTOMER',
+    role VARCHAR(50) NOT NULL DEFAULT 'CUSTOMER',
     is_active BOOLEAN DEFAULT FALSE,
     otp VARCHAR(6),
     otp_expiry DATETIME,
@@ -579,23 +1200,60 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     
     INDEX idx_email (email),
-    INDEX idx_role (role)
-);
+    INDEX idx_role (role),
+    INDEX idx_is_active (is_active)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 ```
+
+**Field Descriptions:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | BIGINT | Primary key, auto-increment |
+| `name` | VARCHAR(255) | User's full name |
+| `email` | VARCHAR(255) | Unique email address (login identifier) |
+| `password` | VARCHAR(255) | BCrypt hashed password (60 chars) |
+| `role` | VARCHAR(50) | User role: CUSTOMER or ADMIN |
+| `is_active` | BOOLEAN | Account activation status |
+| `otp` | VARCHAR(6) | 6-digit OTP for email verification |
+| `otp_expiry` | DATETIME | OTP expiration timestamp (10 minutes) |
+| `created_at` | TIMESTAMP | Account creation timestamp |
+| `updated_at` | TIMESTAMP | Last update timestamp |
 
 ### **MongoDB - Products Collection**
 ```javascript
 {
-  _id: ObjectId,
-  name: String,
-  description: String,
-  price: Number,
-  compareAtPrice: Number,
-  stockQuantity: Number,
-  categoryId: String,
-  categoryName: String,
-  image: String,
-  featured: Boolean,
+  _id: ObjectId("..."),
+  name: String,              // Product name
+  description: String,       // Product description
+  price: Number,            // Current price
+  compareAtPrice: Number,   // Original price (for discount display)
+  stockQuantity: Number,    // Available quantity
+  categoryId: String,       // Category reference ID
+  categoryName: String,     // Category name (denormalized)
+  image: String,           // Product image URL
+  featured: Boolean,       // Featured product flag
+  createdAt: Date,         // Creation timestamp
+  updatedAt: Date          // Last update timestamp
+}
+```
+
+**Indexes:**
+```javascript
+db.products.createIndex({ name: "text" });
+db.products.createIndex({ categoryId: 1 });
+db.products.createIndex({ featured: 1 });
+db.products.createIndex({ price: 1 });
+```
+
+### **MongoDB - Categories Collection**
+```javascript
+{
+  _id: ObjectId("..."),
+  name: String,            // Category name
+  description: String,     // Category description
+  image: String,          // Category image URL
+  featured: Boolean,      // Featured category flag
   createdAt: Date,
   updatedAt: Date
 }
@@ -604,23 +1262,67 @@ CREATE TABLE users (
 ### **MongoDB - Cart Collection**
 ```javascript
 {
-  userId: String,
-  items: [{
-    _id: String,
-    productId: String,
-    name: String,
-    price: Number,
-    quantity: Number,
-    image: String,
-    categoryName: String,
-    stockQuantity: Number
-  }],
+  _id: ObjectId("..."),
+  userId: String,          // User ID reference
+  items: [
+    {
+      _id: String,         // Cart item ID
+      productId: String,   // Product reference ID
+      name: String,        // Product name (denormalized)
+      price: Number,       // Product price (denormalized)
+      quantity: Number,    // Quantity in cart
+      image: String,       // Product image (denormalized)
+      categoryName: String,// Category name (denormalized)
+      stockQuantity: Number// Available stock (denormalized)
+    }
+  ],
   createdAt: Date,
   updatedAt: Date
 }
 ```
 
-**Full Schema Documentation:** [View Database Schema](./docs/DATABASE_SCHEMA.md)
+**Indexes:**
+```javascript
+db.carts.createIndex({ userId: 1 }, { unique: true });
+```
+
+### **MongoDB - Orders Collection**
+```javascript
+{
+  _id: ObjectId("..."),
+  orderId: Number,         // Unique order ID (timestamp-based)
+  userId: String,          // User ID reference
+  customerName: String,    // Customer name
+  email: String,          // Customer email
+  items: [
+    {
+      productId: String,
+      name: String,
+      price: Number,
+      quantity: Number
+    }
+  ],
+  totalAmount: Number,     // Total order amount
+  address: {
+    street: String,
+    city: String,
+    state: String,
+    zipCode: String,
+    country: String
+  },
+  status: String,          // PENDING, CONFIRMED, SHIPPED, DELIVERED, CANCELLED
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+**Indexes:**
+```javascript
+db.orders.createIndex({ userId: 1 });
+db.orders.createIndex({ orderId: 1 }, { unique: true });
+db.orders.createIndex({ status: 1 });
+db.orders.createIndex({ createdAt: -1 });
+```
 
 ---
 
@@ -628,108 +1330,223 @@ CREATE TABLE users (
 
 ### **Homepage**
 ![Homepage](./docs/images/homepage.png)
+*Modern, animated homepage with hero banner and product carousels*
 
 ### **Product Catalog**
 ![Products](./docs/images/products.png)
+*Product grid with category filters and search functionality*
+
+### **Product Details**
+![Product Detail](./docs/images/product-detail.png)
+*Detailed product view with add-to-cart functionality*
 
 ### **Shopping Cart**
 ![Cart](./docs/images/cart.png)
+*Beautifully designed cart page with real-time price calculations*
 
 ### **Checkout Flow**
 ![Checkout](./docs/images/checkout.png)
+*Streamlined checkout with address collection and order summary*
 
-### **Authentication**
+### **Authentication Pages**
+
 <div align="center">
-  <img src="./docs/images/login.png" width="45%" />
-  <img src="./docs/images/register.png" width="45%" />
+  <img src="./docs/images/login.png" width="45%" alt="Login Page" />
+  <img src="./docs/images/register.png" width="45%" alt="Register Page" />
 </div>
+
+*Clean, modern authentication pages with form validation*
+
+### **OTP Verification**
+![OTP Verification](./docs/images/otp-verify.png)
+*Email verification with 6-digit OTP code*
 
 ### **Admin Dashboard**
 ![Admin](./docs/images/admin-dashboard.png)
+*User management dashboard with role assignment*
 
 ### **Email Templates**
+
 <div align="center">
-  <img src="./docs/images/otp-email.png" width="45%" />
-  <img src="./docs/images/order-email.png" width="45%" />
+  <img src="./docs/images/otp-email.png" width="45%" alt="OTP Email" />
+  <img src="./docs/images/order-email.png" width="45%" alt="Order Email" />
 </div>
 
-### **Mobile Responsive**
+*Professional HTML email templates for OTP and order confirmations*
+
+### **Mobile Responsive Design**
+
 <div align="center">
-  <img src="./docs/images/mobile-home.png" width="30%" />
-  <img src="./docs/images/mobile-products.png" width="30%" />
-  <img src="./docs/images/mobile-cart.png" width="30%" />
+  <img src="./docs/images/mobile-home.png" width="30%" alt="Mobile Home" />
+  <img src="./docs/images/mobile-products.png" width="30%" alt="Mobile Products" />
+  <img src="./docs/images/mobile-cart.png" width="30%" alt="Mobile Cart" />
 </div>
+
+*Fully responsive design optimized for mobile devices*
 
 ---
 
 ## 📁 Project Structure
 ```
 ecomart/
-├── ecommerce-backend/                 # Auth Service (Spring Boot)
+│
+├── ecommerce-backend/                 # Auth Service (Spring Boot - Port 8080)
 │   ├── src/
 │   │   ├── main/
-│   │   │   ├── java/
-│   │   │   │   └── com/backend/ecommerce_backend/
-│   │   │   │       ├── Config/        # Security, CORS, JWT config
-│   │   │   │       ├── Controller/    # REST endpoints
-│   │   │   │       ├── Model/         # Entity classes
-│   │   │   │       ├── Repository/    # JPA repositories
-│   │   │   │       ├── Service/       # Business logic
-│   │   │   │       └── Security/      # JWT filters
+│   │   │   ├── java/com/backend/ecommerce_backend/
+│   │   │   │   ├── Config/
+│   │   │   │   │   ├── CorsConfig.java
+│   │   │   │   │   ├── SecurityConfig.java
+│   │   │   │   │   └── JwtConfig.java
+│   │   │   │   ├── Controller/
+│   │   │   │   │   ├── AuthController.java
+│   │   │   │   │   └── AdminController.java
+│   │   │   │   ├── Model/
+│   │   │   │   │   ├── User.java
+│   │   │   │   │   ├── LoginRequest.java
+│   │   │   │   │   ├── RegisterRequest.java
+│   │   │   │   │   ├── VerifyOtpRequest.java
+│   │   │   │   │   ├── LoginResponse.java
+│   │   │   │   │   └── ApiResponse.java
+│   │   │   │   ├── Repository/
+│   │   │   │   │   └── UserRepository.java
+│   │   │   │   ├── Service/
+│   │   │   │   │   ├── AuthService.java
+│   │   │   │   │   ├── EmailService.java
+│   │   │   │   │   ├── JwtService.java
+│   │   │   │   │   └── UserService.java
+│   │   │   │   ├── Security/
+│   │   │   │   │   ├── JwtAuthenticationFilter.java
+│   │   │   │   │   └── CustomUserDetailsService.java
+│   │   │   │   └── Exception/
+│   │   │   │       ├── UserAlreadyExistsException.java
+│   │   │   │       ├── InvalidOtpException.java
+│   │   │   │       └── GlobalExceptionHandler.java
 │   │   │   └── resources/
+│   │   │       ├── application.properties.example
 │   │   │       └── application.properties
 │   │   └── test/
-│   └── pom.xml
+│   ├── pom.xml
+│   └── README.md
 │
-├── ecommerce-backendcheckout/        # Checkout Service (Spring Boot)
+├── ecommerce-backendcheckout/        # Checkout Service (Spring Boot - Port 8082)
 │   ├── src/
 │   │   ├── main/
-│   │   │   ├── java/
-│   │   │   │   └── com/backend/ecommerce_backendcheckout/
-│   │   │   │       ├── Config/
-│   │   │   │       ├── Controller/
-│   │   │   │       ├── Model/
-│   │   │   │       ├── Repository/
-│   │   │   │       └── Service/
+│   │   │   ├── java/com/backend/ecommerce_backendcheckout/
+│   │   │   │   ├── Config/
+│   │   │   │   │   ├── MongoConfig.java
+│   │   │   │   │   └── CorsConfig.java
+│   │   │   │   ├── Controller/
+│   │   │   │   │   ├── ProductController.java
+│   │   │   │   │   └── EmailController.java
+│   │   │   │   ├── Model/
+│   │   │   │   │   ├── Product.java
+│   │   │   │   │   └── OrderEmailRequest.java
+│   │   │   │   ├── Repository/
+│   │   │   │   │   └── ProductRepository.java
+│   │   │   │   └── Service/
+│   │   │   │       └── EmailService.java
 │   │   │   └── resources/
+│   │   │       ├── application.properties.example
 │   │   │       └── application.properties
-│   └── pom.xml
+│   │   └── test/
+│   ├── pom.xml
+│   └── README.md
 │
-├── homepage-service/                  # Homepage Service (Node.js)
+├── homepage-service/                  # Homepage Service (Node.js - Port 3001)
 │   ├── controllers/
+│   │   ├── productController.js
+│   │   ├── categoryController.js
+│   │   ├── cartController.js
+│   │   └── orderController.js
 │   ├── models/
+│   │   ├── Product.js
+│   │   ├── Category.js
+│   │   ├── Cart.js
+│   │   └── Order.js
 │   ├── routes/
+│   │   ├── products.routes.js
+│   │   ├── categories.routes.js
+│   │   ├── cart.routes.js
+│   │   └── orders.routes.js
 │   ├── middleware/
+│   │   ├── authMiddleware.js
+│   │   └── errorHandler.js
 │   ├── config/
+│   │   └── database.js
+│   ├── .env.example
+│   ├── .env
 │   ├── server.js
 │   ├── package.json
 │   │
-│   └── frontend/                      # Main Frontend (React + Vite)
+│   └── frontend/                      # Main Frontend (React + Vite - Port 5173)
 │       ├── src/
 │       │   ├── components/
+│       │   │   ├── Navbar.jsx
+│       │   │   ├── HeroBanner.jsx
+│       │   │   ├── CategoryCarousel.jsx
+│       │   │   ├── ProductCarousel.jsx
+│       │   │   ├── ProductCard.jsx
+│       │   │   ├── CheckoutPopup.jsx
+│       │   │   └── Footer.jsx
 │       │   ├── pages/
+│       │   │   ├── Homepage.jsx
+│       │   │   ├── ProductsPage.jsx
+│       │   │   ├── ProductDetailPage.jsx
+│       │   │   ├── CartPage.jsx
+│       │   │   └── OrdersPage.jsx
 │       │   ├── context/
+│       │   │   ├── AuthContext.jsx
+│       │   │   └── CartContext.jsx
 │       │   ├── hooks/
+│       │   │   └── useApi.js
 │       │   ├── utils/
+│       │   │   └── helpers.js
+│       │   ├── config.js
 │       │   ├── App.jsx
-│       │   └── main.jsx
+│       │   ├── main.jsx
+│       │   └── index.css
 │       ├── public/
 │       ├── index.html
-│       └── package.json
+│       ├── package.json
+│       └── vite.config.js
 │
-├── ecommerce-frontend/                # Auth Frontend (React)
+├── ecommerce-frontend/                # Auth Frontend (React - Port 3000)
 │   ├── src/
 │   │   ├── components/
+│   │   │   ├── Navbar.jsx
+│   │   │   └── Footer.jsx
 │   │   ├── pages/
+│   │   │   ├── LoginPage.jsx
+│   │   │   ├── RegisterPage.jsx
+│   │   │   ├── VerifyOTP.jsx
+│   │   │   └── AdminDashboard.jsx
+│   │   ├── config.js
 │   │   ├── App.js
 │   │   └── index.js
 │   ├── public/
-│   └── package.json
+│   ├── package.json
+│   └── README.md
 │
 ├── docs/                              # Documentation
 │   ├── images/                        # Screenshots
+│   │   ├── banner.png
+│   │   ├── homepage.png
+│   │   ├── products.png
+│   │   ├── cart.png
+│   │   ├── checkout.png
+│   │   ├── login.png
+│   │   ├── register.png
+│   │   ├── otp-verify.png
+│   │   ├── admin-dashboard.png
+│   │   ├── otp-email.png
+│   │   ├── order-email.png
+│   │   ├── mobile-home.png
+│   │   ├── mobile-products.png
+│   │   └── mobile-cart.png
 │   ├── API_COLLECTION.json            # Postman collection
-│   └── DATABASE_SCHEMA.md             # Database documentation
+│   ├── DATABASE_SCHEMA.md             # Database documentation
+│   └── DEPLOYMENT.md                  # Deployment guide
 │
 ├── .gitignore
 ├── README.md
@@ -740,7 +1557,7 @@ ecomart/
 
 ## 🧪 Testing
 
-### **Backend Testing**
+### **Backend Unit Tests**
 ```bash
 # Auth Service tests
 cd ecommerce-backend
@@ -749,16 +1566,28 @@ mvn test
 # Checkout Service tests
 cd ecommerce-backendcheckout
 mvn test
+
+# Expected output:
+# Tests run: X, Failures: 0, Errors: 0, Skipped: 0
 ```
 
 ### **API Testing with Postman**
 
-1. Import the Postman collection: `docs/API_COLLECTION.json`
-2. Set environment variables:
-   - `AUTH_URL`: http://localhost:8080
-   - `CHECKOUT_URL`: http://localhost:8082
-   - `API_URL`: http://localhost:3001
-3. Run the collection
+1. **Import Collection**
+   - Download: `docs/API_COLLECTION.json`
+   - Open Postman → Import → Select file
+
+2. **Set Environment Variables**
+```
+   AUTH_URL: http://localhost:8080
+   CHECKOUT_URL: http://localhost:8082
+   API_URL: http://localhost:3001
+   JWT_TOKEN: (will be set after login)
+```
+
+3. **Run Collection**
+   - Collection Runner → Select "EcoMart API"
+   - Run all requests
 
 ### **Frontend Testing**
 ```bash
@@ -771,75 +1600,308 @@ cd ecommerce-frontend
 npm test
 ```
 
+### **Manual Testing Checklist**
+
+- [ ] User registration with email validation
+- [ ] OTP email delivery (check spam folder)
+- [ ] OTP verification and account activation
+- [ ] Login with JWT token generation
+- [ ] Product browsing and search
+- [ ] Add to cart functionality
+- [ ] Cart quantity updates
+- [ ] Remove from cart
+- [ ] Checkout process
+- [ ] Order email confirmation
+- [ ] Stock update after purchase
+- [ ] Admin user management
+- [ ] Role-based access control
+
 ---
 
 ## 🚢 Deployment
 
-### **Docker Deployment**
-```bash
-# Build Docker images
-docker-compose build
-
-# Start all services
-docker-compose up -d
-
-# Stop all services
-docker-compose down
-```
-
 ### **Production Deployment Checklist**
 
-- [ ] Change JWT secret to strong random key
-- [ ] Update CORS origins to production URLs
-- [ ] Use environment variables for sensitive data
-- [ ] Set `spring.jpa.hibernate.ddl-auto=validate` in production
-- [ ] Enable HTTPS/SSL
-- [ ] Setup database backups
-- [ ] Configure monitoring (Sentry, Datadog)
-- [ ] Setup CI/CD pipeline (GitHub Actions)
-- [ ] Use production email service (SendGrid, AWS SES)
-- [ ] Implement rate limiting
-- [ ] Add logging aggregation
+#### **Security**
+- [ ] Change all default passwords
+- [ ] Generate strong JWT secret (min 256 bits)
+- [ ] Use environment variables for all secrets
+- [ ] Enable HTTPS/SSL certificates
+- [ ] Update CORS to production URLs only
+- [ ] Set `spring.jpa.hibernate.ddl-auto=validate`
+- [ ] Enable rate limiting
+- [ ] Add request logging
+- [ ] Setup error monitoring (Sentry)
 
-**Deployment Platforms:**
-- **Backend:** AWS EC2, Google Cloud Run, Heroku
-- **Frontend:** Vercel, Netlify, AWS S3 + CloudFront
-- **Database:** AWS RDS (MySQL), MongoDB Atlas
+#### **Database**
+- [ ] Use managed database services (AWS RDS, MongoDB Atlas)
+- [ ] Enable automated backups
+- [ ] Setup read replicas for scaling
+- [ ] Create database indexes
+- [ ] Implement connection pooling
+
+#### **Backend Services**
+- [ ] Containerize with Docker
+- [ ] Use production email service (SendGrid, AWS SES)
+- [ ] Setup health check endpoints
+- [ ] Configure logging aggregation
+- [ ] Enable monitoring (Prometheus, Grafana)
+- [ ] Setup CI/CD pipeline
+
+#### **Frontend**
+- [ ] Build optimized production bundle
+- [ ] Enable code splitting
+- [ ] Compress assets (images, JS, CSS)
+- [ ] Setup CDN (CloudFront, Cloudflare)
+- [ ] Configure caching headers
+- [ ] Enable gzip compression
+
+### **Deployment Platforms**
+
+**Backend Services:**
+- AWS EC2 / Google Cloud Compute
+- Heroku
+- DigitalOcean Droplets
+- Railway
+- Render
+
+**Frontend:**
+- Vercel (Recommended for React)
+- Netlify
+- AWS S3 + CloudFront
+- GitHub Pages
+
+**Databases:**
+- AWS RDS (MySQL)
+- MongoDB Atlas (already cloud-hosted)
+- Google Cloud SQL
+
+### **Docker Deployment**
+
+**Dockerfile Example (Auth Service):**
+```dockerfile
+FROM openjdk:17-slim
+WORKDIR /app
+COPY target/ecommerce-backend-1.0.0.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
+```
+
+**docker-compose.yml:**
+```yaml
+version: '3.8'
+
+services:
+  auth-service:
+    build: ./ecommerce-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - MYSQL_URL=jdbc:mysql://mysql:3306/ecommerce_auth
+      - JWT_SECRET=${JWT_SECRET}
+    depends_on:
+      - mysql
+
+  checkout-service:
+    build: ./ecommerce-backendcheckout
+    ports:
+      - "8082:8082"
+    environment:
+      - MONGODB_URI=${MONGODB_URI}
+
+  homepage-service:
+    build: ./homepage-service
+    ports:
+      - "3001:3001"
+    environment:
+      - MONGODB_URI=${MONGODB_URI}
+      - JWT_SECRET=${JWT_SECRET}
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=ecommerce_auth
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
+```
+
+**Build and Run:**
+```bash
+docker-compose up -d
+```
+
+---
+
+## 🔐 Security
+
+### **Security Features Implemented**
+
+✅ **Password Security**
+- BCrypt hashing with 10 salt rounds
+- Passwords never stored in plain text
+- Password complexity validation
+
+✅ **JWT Authentication**
+- HS256 algorithm
+- 24-hour token expiration
+- Stateless authentication
+- Token validation on every request
+
+✅ **Email Verification**
+- 6-digit OTP with 10-minute expiry
+- Account activation required before login
+- OTP regeneration available
+
+✅ **CORS Protection**
+- Whitelisted origins only
+- Credentials allowed for authenticated requests
+- Pre-flight request handling
+
+✅ **SQL Injection Prevention**
+- JPA/Hibernate parameterized queries
+- No raw SQL queries
+
+✅ **XSS Protection**
+- React's built-in escaping
+- Input sanitization
+
+✅ **HTTPS Ready**
+- SSL/TLS configuration available
+- Redirect HTTP to HTTPS (production)
+
+### **Security Best Practices**
+
+❌ **Never Do:**
+- Commit `.env` files to Git
+- Store passwords in plain text
+- Use default secrets in production
+- Expose database ports publicly
+- Log sensitive data (passwords, tokens)
+
+✅ **Always Do:**
+- Use environment variables for secrets
+- Rotate credentials regularly
+- Keep dependencies updated
+- Use HTTPS in production
+- Implement rate limiting
+- Enable audit logging
+- Regular security audits
+
+### **Environment Variables**
+
+**Create `.env` files (never commit these):**
+
+**.env (Auth Service)**
+```env
+DB_PASSWORD=your_secure_mysql_password
+JWT_SECRET=your_generated_secret_key_min_256_bits
+GMAIL_USER=your_email@gmail.com
+GMAIL_PASSWORD=your_16_digit_app_password
+```
+
+**.env (Checkout Service)**
+```env
+MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/db
+GMAIL_USER=your_email@gmail.com
+GMAIL_PASSWORD=your_16_digit_app_password
+```
+
+**.env (Homepage Service)**
+```env
+MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/db
+JWT_SECRET=same_as_auth_service_secret
+```
+
+**Add to .gitignore:**
+```gitignore
+.env
+.env.local
+.env.production
+*.env
+**/application.properties
+!application.properties.example
+```
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please follow these steps:
+Contributions are welcome! Please follow these guidelines:
+
+### **How to Contribute**
 
 1. **Fork the repository**
+```bash
+   git clone https://github.com/yourusername/ecomart.git
+```
+
 2. **Create a feature branch**
 ```bash
    git checkout -b feature/AmazingFeature
 ```
-3. **Commit your changes**
+
+3. **Make your changes**
+   - Write clean, documented code
+   - Follow existing code style
+   - Add tests if applicable
+
+4. **Commit your changes**
 ```bash
    git commit -m 'Add some AmazingFeature'
 ```
-4. **Push to the branch**
+
+5. **Push to your branch**
 ```bash
    git push origin feature/AmazingFeature
 ```
-5. **Open a Pull Request**
+
+6. **Open a Pull Request**
+   - Describe your changes
+   - Link related issues
+   - Request review
 
 ### **Code Style Guidelines**
 
-- Follow Java naming conventions
-- Use ESLint for JavaScript
-- Write meaningful commit messages
-- Add comments for complex logic
-- Update documentation
+**Java (Spring Boot):**
+- Follow Google Java Style Guide
+- Use meaningful variable names
+- Add JavaDoc for public methods
+- Keep methods under 50 lines
+
+**JavaScript/React:**
+- Use ESLint configuration
+- Follow Airbnb React Style Guide
+- Use functional components with hooks
+- Prop-types or TypeScript for type safety
+
+**Commit Messages:**
+```
+feat: Add user profile page
+fix: Resolve cart quantity bug
+docs: Update API documentation
+style: Format code with prettier
+refactor: Simplify authentication logic
+test: Add unit tests for cart service
+```
+
+### **Reporting Issues**
+
+When reporting bugs, include:
+- Steps to reproduce
+- Expected behavior
+- Actual behavior
+- Screenshots (if applicable)
+- Environment details (OS, browser, versions)
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see below for details:
 ```
 MIT License
 
@@ -847,20 +1909,35 @@ Copyright (c) 2024 [Your Name]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction...
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 ```
 
 ---
 
 ## 👤 Contact
 
-**Your Name** - [Your Email](mailto:your.email@example.com)
+**Your Name**
+
+📧 Email: your.email@example.com  
+🔗 LinkedIn: [linkedin.com/in/yourprofile](https://linkedin.com/in/yourprofile)  
+🌐 Portfolio: [yourportfolio.com](https://yourportfolio.com)  
+🐙 GitHub: [@yourusername](https://github.com/yourusername)
 
 **Project Link:** [https://github.com/yourusername/ecomart](https://github.com/yourusername/ecomart)
-
-**LinkedIn:** [Your LinkedIn](https://linkedin.com/in/yourprofile)
-
-**Portfolio:** [Your Portfolio](https://yourportfolio.com)
 
 ---
 
@@ -868,48 +1945,74 @@ in the Software without restriction...
 
 - [Spring Boot Documentation](https://spring.io/projects/spring-boot)
 - [React Documentation](https://reactjs.org/)
-- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+- [MongoDB Documentation](https://docs.mongodb.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
-- [DaisyUI](https://daisyui.com/)
-- Icons by [Heroicons](https://heroicons.com/)
-- Inspiration from various e-commerce platforms
+- [DaisyUI Components](https://daisyui.com/)
+- [Heroicons](https://heroicons.com/) - Beautiful SVG icons
+- [JWT.io](https://jwt.io/) - JWT documentation and debugger
+- [Postman](https://www.postman.com/) - API testing platform
 
 ---
 
 ## 📊 Project Statistics
 
-- **Total Lines of Code:** ~5,000+
-- **Backend Services:** 3
-- **Frontend Applications:** 2
+- **Total Lines of Code:** ~5,500+
+- **Backend Services:** 3 (Auth, Checkout, Homepage)
+- **Frontend Applications:** 2 (Auth UI, Main UI)
 - **API Endpoints:** 25+
-- **Database Collections/Tables:** 6
+- **Database Tables/Collections:** 6
 - **React Components:** 20+
-- **Development Time:** [Your timeline]
+- **Pages/Routes:** 15+
+- **Technologies Used:** 12+
+- **Development Duration:** [Your Timeline]
 
 ---
 
 ## 🎓 Learning Outcomes
 
-This project demonstrates proficiency in:
+This project demonstrates comprehensive knowledge of:
 
-✅ **Microservices Architecture**  
-✅ **RESTful API Design**  
-✅ **JWT Authentication**  
-✅ **Database Design (SQL & NoSQL)**  
-✅ **Frontend Development with React**  
-✅ **State Management (Context API)**  
-✅ **Responsive UI Design**  
-✅ **Email Integration**  
-✅ **Security Best Practices**  
-✅ **Git Version Control**
+✅ **Microservices Architecture** - Designing and implementing distributed systems  
+✅ **RESTful API Design** - Creating scalable, maintainable APIs  
+✅ **JWT Authentication** - Implementing secure, stateless authentication  
+✅ **Database Design** - Working with both SQL and NoSQL databases  
+✅ **Frontend Development** - Building responsive, modern UIs with React  
+✅ **State Management** - Using Context API for global state  
+✅ **Email Integration** - SMTP configuration and HTML templates  
+✅ **Security Best Practices** - Password hashing, CORS, input validation  
+✅ **Version Control** - Git workflow and collaboration  
+✅ **API Testing** - Using Postman for endpoint verification  
+✅ **Responsive Design** - Mobile-first, cross-device compatibility  
+✅ **Code Organization** - Separation of concerns, modularity  
+
+---
+
+## 🎯 Future Enhancements
+
+Planned features for future releases:
+
+- [ ] Payment gateway integration (Stripe/Razorpay)
+- [ ] Product reviews and ratings
+- [ ] Wishlist functionality
+- [ ] Advanced search with Elasticsearch
+- [ ] Real-time notifications with WebSockets
+- [ ] Order tracking with status updates
+- [ ] Admin analytics dashboard
+- [ ] Multi-language support (i18n)
+- [ ] Social authentication (Google, Facebook)
+- [ ] Product recommendations engine
+- [ ] Inventory management system
+- [ ] Coupon and discount codes
+- [ ] Invoice generation (PDF)
+- [ ] Mobile app (React Native)
 
 ---
 
 <div align="center">
 
-### ⭐ Star this repository if you found it helpful!
+### ⭐ If you found this project helpful, please give it a star!
 
-**Made with ❤️ by Varad Jumbad, Ruchita Kamble, KartarSingh Gothwal
+**Built with ❤️ by Varad Jumbad, Ruchita Kamble , Kartar Singh Gothwal**
 
 [⬆ Back to Top](#-ecomart---e-commerce-platform)
 
