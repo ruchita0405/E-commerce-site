@@ -72,10 +72,10 @@ public class AuthController {
     @PostMapping("/login")
     @Operation(summary = "User login", description = "Permit to user to get connected on his/her account")
     public Map<String, String> login(@RequestBody AuthentificationDto authentificationDto){
-        log.info("Login attempt for user: {}", authentificationDto.email());
+        log.info("Login attempt for user: {}", authentificationDto.username());
 
         final Authentication authenticate = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authentificationDto.email(), authentificationDto.password())
+                new UsernamePasswordAuthenticationToken(authentificationDto.username(), authentificationDto.password())
         );
 
         if (authenticate.isAuthenticated()){
@@ -85,7 +85,7 @@ public class AuthController {
             return this.jwtService.generate(user);
         }
 
-        log.warn("Authentication failed for user: {}", authentificationDto.email());
+        log.warn("Authentication failed for user: {}", authentificationDto.username());
         return null;
     }
 
