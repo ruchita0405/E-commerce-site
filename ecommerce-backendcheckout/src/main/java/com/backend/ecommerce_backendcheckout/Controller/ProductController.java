@@ -165,9 +165,6 @@ public class ProductController {
         }
     }
 
-    @PostConstruct
-    public void verifyMongoConnection() {
-        System.out.println("🟢 MongoDB Product count: " + productRepository.count());
-    }
+
 
 }

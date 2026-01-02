@@ -13,7 +13,6 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -24,60 +23,76 @@ import java.util.Map;
 public class ApplicationControllerAdvice {
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler(value = AccessDeniedException.class)
-    public @ResponseBody ProblemDetail accessDeniedException(final AccessDeniedException exception){
-        ApplicationControllerAdvice.log.error(exception.getMessage(), exception);
-        return ProblemDetail.forStatusAndDetail(HttpStatus.FORBIDDEN, "You are not allowed to do this action");
+    @ExceptionHandler(AccessDeniedException.class)
+    public ProblemDetail accessDeniedException(AccessDeniedException exception) {
+        log.error(exception.getMessage(), exception);
+        return ProblemDetail.forStatusAndDetail(
+                HttpStatus.FORBIDDEN,
+                "You are not allowed to do this action"
+        );
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler(value = IncorrectResultSizeDataAccessException.class)
-    public @ResponseBody ProblemDetail accessDeniedException(final IncorrectResultSizeDataAccessException exception){
-        ApplicationControllerAdvice.log.error(exception.getMessage(), exception);
-        return ProblemDetail.forStatusAndDetail(HttpStatus.FORBIDDEN, "Incorrect result size");
+    @ExceptionHandler(IncorrectResultSizeDataAccessException.class)
+    public ProblemDetail incorrectResultSizeException(IncorrectResultSizeDataAccessException exception) {
+        log.error(exception.getMessage(), exception);
+        return ProblemDetail.forStatusAndDetail(
+                HttpStatus.FORBIDDEN,
+                "Incorrect result size"
+        );
     }
 
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-    @ExceptionHandler(value = LockedException.class)
-    public @ResponseBody ProblemDetail lockedException(final LockedException exception){
-        ApplicationControllerAdvice.log.error(exception.getMessage(), exception);
-        return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_ACCEPTABLE, "Your account is locked. Please enter your otp code or contact an administrator to get unlocked.");
+    @ExceptionHandler(LockedException.class)
+    public ProblemDetail lockedException(LockedException exception) {
+        log.error(exception.getMessage(), exception);
+        return ProblemDetail.forStatusAndDetail(
+                HttpStatus.NOT_ACCEPTABLE,
+                "Your account is locked. Please enter your OTP or contact administrator."
+        );
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(value = BadCredentialsException.class)
-    public @ResponseBody ProblemDetail badCredentialsException(final BadCredentialsException exception){
-        ApplicationControllerAdvice.log.error(exception.getMessage(), exception);
-        final ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, "bad credentials");
-        problemDetail.setProperty("error", "We could not authenticate yourself");
+    @ExceptionHandler(BadCredentialsException.class)
+    public ProblemDetail badCredentialsException(BadCredentialsException exception) {
+        log.error(exception.getMessage(), exception);
+        ProblemDetail problemDetail =
+                ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, "Bad credentials");
+        problemDetail.setProperty("error", "We could not authenticate you");
         return problemDetail;
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(value = {MalformedJwtException.class, SignatureException.class})
-    public @ResponseBody ProblemDetail signatureException(final Exception exception){
-        ApplicationControllerAdvice.log.error(exception.getMessage(), exception);
-        return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, "Invalid JWT token");
+    @ExceptionHandler({MalformedJwtException.class, SignatureException.class})
+    public ProblemDetail jwtSignatureException(Exception exception) {
+        log.error(exception.getMessage(), exception);
+        return ProblemDetail.forStatusAndDetail(
+                HttpStatus.UNAUTHORIZED,
+                "Invalid JWT token"
+        );
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(value = ExpiredJwtException.class)
-    public @ResponseBody ProblemDetail expiredJwtException(final Exception exception){
-        ApplicationControllerAdvice.log.error(exception.getMessage(), exception);
-        return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, "JWT token is expired");
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ProblemDetail expiredJwtException(Exception exception) {
+        log.error(exception.getMessage(), exception);
+        return ProblemDetail.forStatusAndDetail(
+                HttpStatus.UNAUTHORIZED,
+                "JWT token is expired"
+        );
     }
 
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(value = Exception.class)
-    public ResponseEntity<?> exceptionsHandler(Exception ex, HttpServletRequest request){
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> globalExceptionHandler(Exception ex, HttpServletRequest request) {
+        log.error("Unhandled exception", ex);
 
-        // Construire la réponse JSON
         Map<String, String> body = Map.of(
                 "status", "error",
-                "message", ex.getMessage() != null ? ex.getMessage() : "Une erreur est survenue"
+                "message", ex.getMessage() != null ? ex.getMessage() : "An unexpected error occurred"
         );
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
-//        return Map.of("erreur", "description");
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(body);
     }
 }

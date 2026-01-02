@@ -43,6 +43,7 @@ const allowedOrigins = [
   'http://localhost:5174',      // Vite (alternate)
   'http://127.0.0.1:3000',
   'http://127.0.0.1:5173',
+  'http://localhost:3005',
   process.env.FRONTEND_URL      // Production URL from .env
 ].filter(Boolean); // Remove undefined values
 
